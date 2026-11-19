@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblioteca | UTN</title>
+  <link rel="stylesheet" href="/biblioteca.css">
+  <script src="/js/biblioteca.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Biblioteca Universitaria</h1>
+    <nav aria-label="Navegación"><a href="/admin.html">Usuarios</a> <a href="/">Inicio</a></nav>
+  </header>
+  <main>
+    <p id="estado" role="status" aria-live="polite"></p>
+    <section id="catalogo" hidden>
+      <h2>Catálogo</h2>
+      <form id="buscar">
+        <label>Buscar por título, autor o categoría <input name="q" maxlength="200"></label>
+        <button>Buscar</button>
+      </form>
+      <form id="libro" hidden>
+        <label>ISBN <input name="isbn" maxlength="20" required></label>
+        <label>Título <input name="titulo" maxlength="200" required></label>
+        <label>Autor <input name="autor" maxlength="150" required></label>
+        <label>Categoría <input name="categoria" maxlength="100" required></label>
+        <label>Disponibles <input name="cantidad_disponible" type="number" value="0" min="0" required></label>
+        <label>Ubicación <input name="ubicacion" maxlength="100" required></label>
+        <button id="guardarLibro">Agregar libro</button>
+        <button type="button" id="cancelar" hidden>Cancelar edición</button>
+      </form>
+      <div class="tabla">
+        <table>
+          <thead><tr><th>ISBN</th><th>Título</th><th>Autor</th><th>Categoría</th><th>Disponibles</th><th>Ubicación</th><th>Acciones</th></tr></thead>
+          <tbody id="libros"></tbody>
+        </table>
+      </div>
+    </section>
+    <section id="registro" hidden>
+      <h2>Registro de socios</h2>
+      <form id="socio">
+        <label>Carné <input name="carne" maxlength="30" required></label>
+        <label>Nombre <input name="nombre" maxlength="150" required></label>
+        <label>Correo <input name="correo" type="email" maxlength="150" required></label>
+        <button>Registrar socio</button>
+      </form>
+    </section>
+    <section id="nuevoPrestamo" hidden>
+      <h2>Registrar préstamo</h2>
+      <form id="prestamo">
+        <label>Socio <select name="socio_id" required></select></label>
+        <label>Libro <select name="libro_id" required></select></label>
+        <button>Registrar préstamo</button>
+      </form>
+    </section>
+    <section id="devoluciones" hidden>
+      <h2>Préstamos activos y devoluciones</h2>
+      <div class="tabla">
+        <table>
+          <thead><tr><th>Libro</th><th>Socio</th><th>Vencimiento</th><th>Días de atraso</th><th>Acción</th></tr></thead>
+          <tbody id="activos"></tbody>
+        </table>
+      </div>
+    </section>
+    <section id="reporte" hidden>
+      <h2>Reporte de préstamos vencidos</h2>
+      <button id="actualizarReporte" type="button">Actualizar reporte</button>
+      <div class="tabla">
+        <table>
+          <thead><tr><th>Libro</th><th>Socio</th><th>Vencimiento</th><th>Días de atraso</th></tr></thead>
+          <tbody id="vencidos"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

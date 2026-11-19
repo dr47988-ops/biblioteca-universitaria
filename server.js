@@ -10,6 +10,7 @@ const path = require('path');
 const pool = require('./src/config/db');
 const authRoutes = require('./src/routes/authRoutes');
 const usuariosRoutes = require('./src/routes/usuariosRoutes');
+const bibliotecaRoutes = require('./src/routes/bibliotecaRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -57,6 +58,7 @@ app.use('/api/auth', authRoutes);
 // RUTAS DE USUARIOS
 // =====================================
 app.use('/api/usuarios', usuariosRoutes);
+app.use('/api/biblioteca', bibliotecaRoutes);
 
 // =====================================
 // COMPROBAR ESTADO DEL SERVIDOR
