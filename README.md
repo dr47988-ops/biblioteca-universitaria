@@ -71,3 +71,18 @@ El proyecto incluye pruebas iniciales de autenticacion, acceso no autorizado e i
 - El archivo .env.example contiene valores de ejemplo, no credenciales reales.
 - Para utilizar el panel administrativo se necesita una cuenta con el rol correspondiente.
 - No se incluyen contrasenas reales ni datos personales de usuarios en los scripts de ejemplo.
+
+## Crear el primer SuperAdmin
+
+Despues de configurar PostgreSQL y ejecutar los scripts SQL, ejecutar:
+
+    node scripts/crear-superadmin.js
+
+El programa solicitara identificacion, nombre, usuario, correo y contrasena.
+
+La contrasena debe tener al menos 8 caracteres y se almacena protegida con bcrypt.
+
+Por seguridad:
+- El script solo permite crear el administrador inicial si no existe otro SuperAdmin.
+- No se deben compartir contrasenas ni incluirlas en GitHub.
+- Si ya existe un SuperAdmin, el programa no creara otro.
