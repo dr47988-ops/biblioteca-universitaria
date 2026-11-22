@@ -1,6 +1,10 @@
 const express = require('express');
 const pool = require('../config/db');
-const { verificarSesion } = require('../middleware/authMiddleware');
+const {
+  PERMISOS,
+  requierePermiso,
+  usuarioAutenticado
+} = require('../middleware/authMiddleware');
 const { csrfSynchronisedProtection } = require('../middleware/csrfMiddleware');
 
 const router = express.Router();
@@ -38,25 +42,10 @@ function datosLibro(body) {
   ];
 }
 
-async function permisos(rolId) {
-  const { rows } = await pool.query(
-    `SELECT p.nombre FROM public.permisos p
-     JOIN public.rol_permiso rp ON rp.permiso_id = p.id
-     WHERE rp.rol_id = $1`,
-    [rolId]
-  );
-  return rows.map(({ nombre }) => nombre);
-}
-
-function permitir(...opciones) {
-  return async (req, res, next) => {
-    const asignados = await permisos(req.session.usuario.rol_id);
-    if (!opciones.some(opcion => asignados.includes(opcion))) {
-      return res.status(403).json({ mensaje: 'No tiene permisos para realizar esta acción.' });
-    }
-    next();
-  };
-}
+// Control de acceso compartido (UTN-05): sin sesión o sin permiso
+// responde 403 desde authMiddleware, igual que el resto del sistema.
+const { CREAR, EDITAR, BORRAR, VER_REPORTES } = PERMISOS;
+const permitir = requierePermiso;
 
 async function transaccion(operacion) {
   const cliente = await pool.connect();
@@ -73,12 +62,12 @@ async function transaccion(operacion) {
   }
 }
 
-router.use(verificarSesion);
-router.get('/permisos', async (req, res) => {
-  res.json(await permisos(req.session.usuario.rol_id));
+router.use(usuarioAutenticado);
+router.get('/permisos', (req, res) => {
+  res.json(req.acceso.permisos);
 });
 
-const consultar = permitir('crear', 'editar', 'borrar', 'ver_reportes');
+const consultar = permitir(CREAR, EDITAR, BORRAR, VER_REPORTES);
 router.get('/libros', consultar, async (req, res) => {
   const q = req.query.q === undefined || req.query.q === '' ? '' : texto(req.query.q, 200, 'Búsqueda');
   const { rows } = await pool.query(
@@ -92,7 +81,7 @@ router.get('/libros', consultar, async (req, res) => {
   res.json(rows);
 });
 
-router.post('/libros', permitir('crear'), csrfSynchronisedProtection, async (req, res) => {
+router.post('/libros', permitir(CREAR), csrfSynchronisedProtection, async (req, res) => {
   const { rows } = await pool.query(
     `INSERT INTO public.libros (isbn, titulo, autor, categoria, cantidad_disponible, ubicacion)
      VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`, datosLibro(req.body ?? {})
@@ -100,7 +89,7 @@ router.post('/libros', permitir('crear'), csrfSynchronisedProtection, async (req
   res.status(201).json(rows[0]);
 });
 
-router.put('/libros/:id', permitir('editar'), csrfSynchronisedProtection, async (req, res) => {
+router.put('/libros/:id', permitir(EDITAR), csrfSynchronisedProtection, async (req, res) => {
   const id = entero(req.params.id, 1, 'Libro');
   const datos = datosLibro(req.body ?? {});
   const cantidadAnterior = entero(req.body.cantidad_anterior, 0, 'Cantidad anterior');
@@ -113,7 +102,7 @@ router.put('/libros/:id', permitir('editar'), csrfSynchronisedProtection, async 
   res.json({ mensaje: 'Libro actualizado.' });
 });
 
-router.delete('/libros/:id', permitir('borrar'), csrfSynchronisedProtection, async (req, res) => {
+router.delete('/libros/:id', permitir(BORRAR), csrfSynchronisedProtection, async (req, res) => {
   const { rowCount } = await pool.query('DELETE FROM public.libros WHERE id=$1', [
     entero(req.params.id, 1, 'Libro')
   ]);
@@ -121,12 +110,12 @@ router.delete('/libros/:id', permitir('borrar'), csrfSynchronisedProtection, asy
   res.status(204).end();
 });
 
-router.get('/socios', permitir('crear'), async (req, res) => {
+router.get('/socios', permitir(CREAR), async (req, res) => {
   const { rows } = await pool.query('SELECT id, carne, nombre FROM public.socios ORDER BY nombre, id');
   res.json(rows);
 });
 
-router.post('/socios', permitir('crear'), csrfSynchronisedProtection, async (req, res) => {
+router.post('/socios', permitir(CREAR), csrfSynchronisedProtection, async (req, res) => {
   const { carne, nombre, correo } = req.body ?? {};
   const email = texto(correo, 150, 'Correo').toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -139,7 +128,7 @@ router.post('/socios', permitir('crear'), csrfSynchronisedProtection, async (req
   res.status(201).json(rows[0]);
 });
 
-router.post('/prestamos', permitir('crear'), csrfSynchronisedProtection, async (req, res) => {
+router.post('/prestamos', permitir(CREAR), csrfSynchronisedProtection, async (req, res) => {
   const libro = entero(req.body?.libro_id, 1, 'Libro');
   const socio = entero(req.body?.socio_id, 1, 'Socio');
   const prestamo = await transaccion(async cliente => {
@@ -175,19 +164,19 @@ const resumenPrestamos = `SELECT p.id, l.titulo, s.nombre, s.carne, p.fecha_venc
     JOIN public.socios s ON s.id=p.socio_id
     WHERE p.fecha_devolucion IS NULL`;
 
-router.get('/prestamos', permitir('editar'), async (req, res) => {
+router.get('/prestamos', permitir(EDITAR), async (req, res) => {
   const { rows } = await pool.query(`${resumenPrestamos} ORDER BY p.fecha_vencimiento, p.id`);
   res.json(rows);
 });
 
-router.get('/prestamos/vencidos', permitir('ver_reportes'), async (req, res) => {
+router.get('/prestamos/vencidos', permitir(VER_REPORTES), async (req, res) => {
   const { rows } = await pool.query(
     `${resumenPrestamos} AND ${vencimientoLocal} < ${fechaLocal} ORDER BY p.fecha_vencimiento, p.id`
   );
   res.json(rows);
 });
 
-router.post('/prestamos/:id/devolucion', permitir('editar'), csrfSynchronisedProtection, async (req, res) => {
+router.post('/prestamos/:id/devolucion', permitir(EDITAR), csrfSynchronisedProtection, async (req, res) => {
   const id = entero(req.params.id, 1, 'Préstamo');
   const devolucion = await transaccion(async cliente => {
     const { rows: [prestamo] } = await cliente.query(
