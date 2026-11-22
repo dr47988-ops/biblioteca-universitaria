@@ -10,6 +10,7 @@ const path = require('path');
 const pool = require('./src/config/db');
 const authRoutes = require('./src/routes/authRoutes');
 const usuariosRoutes = require('./src/routes/usuariosRoutes');
+const rolesRoutes = require('./src/routes/rolesRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -57,6 +58,11 @@ app.use('/api/auth', authRoutes);
 // RUTAS DE USUARIOS
 // =====================================
 app.use('/api/usuarios', usuariosRoutes);
+
+// =====================================
+// RUTAS DE ROLES Y PERMISOS
+// =====================================
+app.use('/api/roles', rolesRoutes);
 
 // =====================================
 // COMPROBAR ESTADO DEL SERVIDOR
