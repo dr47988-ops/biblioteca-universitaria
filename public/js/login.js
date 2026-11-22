@@ -8,6 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!formulario) return;
 
+  // Avisar cuando se llega por expiración o falta de sesión
+  const parametros = new URLSearchParams(window.location.search);
+
+  if (parametros.get('sesion') === 'expirada') {
+    mensaje.className = 'alert alert-warning';
+    mensaje.textContent =
+      'Su sesión expiró por inactividad. Inicie sesión de nuevo.';
+    window.history.replaceState(null, '', '/');
+  }
+
   // Mostrar u ocultar contraseña
   mostrarContrasena.addEventListener('click', () => {
     const visible = campoContrasena.type === 'text';
@@ -56,14 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
       mensaje.className = 'alert alert-success';
       mensaje.textContent = 'Inicio de sesión exitoso. Redirigiendo...';
 
-      // Enviar al panel según el rol
-      if (datos.usuario.rol_id === 1) {
-        window.location.href = '/admin.html';
-      } else {
-        mensaje.className = 'alert alert-info';
-        mensaje.textContent =
-          'Inicio de sesión correcto. El panel para este rol está en desarrollo.';
-      }
+      // El panel se adapta al rol y permisos de cada usuario
+      window.location.href = '/admin.html';
 
     } catch (error) {
       mensaje.className = 'alert alert-danger';
