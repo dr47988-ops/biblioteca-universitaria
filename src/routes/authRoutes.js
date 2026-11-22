@@ -9,7 +9,8 @@ const {
 
 const {
   verificarSesion,
-  permitirRoles
+  usuarioAutenticado,
+  soloSuperAdmin
 } = require('../middleware/authMiddleware');
 
 const {
@@ -37,8 +38,7 @@ router.get(
 // =====================================
 router.post(
   '/registro',
-  verificarSesion,
-  permitirRoles(1),
+  soloSuperAdmin,
   csrfSynchronisedProtection,
   registrar
 );
@@ -53,10 +53,15 @@ router.post('/login', login);
 // =====================================
 router.get(
   '/mi-sesion',
-  verificarSesion,
+  usuarioAutenticado,
   (req, res) => {
     return res.status(200).json({
-      usuario: req.session.usuario
+      usuario: {
+        ...req.session.usuario,
+        rol: req.acceso.rol,
+        permisos: req.acceso.permisos,
+        esSuperAdmin: req.acceso.esSuperAdmin
+      }
     });
   }
 );
