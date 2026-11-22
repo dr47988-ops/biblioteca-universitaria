@@ -1,16 +1,26 @@
-
 require('dotenv').config();
 
 const express = require('express');
-const session = require('express-session');
-const pgSession = require('connect-pg-simple')(session);
-const helmet = require('helmet');
 const path = require('path');
 
-const pool = require('./src/config/db');
+const { middlewareSesion } = require('./src/config/sesion');
 const authRoutes = require('./src/routes/authRoutes');
 const usuariosRoutes = require('./src/routes/usuariosRoutes');
 const rolesRoutes = require('./src/routes/rolesRoutes');
+
+const {
+  encabezadosSeguridad,
+  sinCache,
+  PAGINAS_PROTEGIDAS,
+  protegerPaginas
+} = require('./src/middleware/seguridadMiddleware');
+
+const {
+  errorCSRF,
+  errorSolicitud,
+  rutaNoEncontrada,
+  errorInterno
+} = require('./src/middleware/erroresMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,50 +28,35 @@ const PORT = process.env.PORT || 3000;
 // =====================================
 // CONFIGURACIÓN DE SEGURIDAD
 // =====================================
-app.use(helmet());
+// Detrás de un proxy HTTPS (hosting), confiar en el primer proxy
+// para que la cookie Secure y la IP del cliente funcionen.
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.disable('x-powered-by');
+app.use(encabezadosSeguridad);
 
-// =====================================
-// ARCHIVOS HTML, CSS Y JAVASCRIPT
-// =====================================
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: false, limit: '10kb' }));
 
 // =====================================
 // SESIONES ALMACENADAS EN POSTGRESQL
 // =====================================
-app.use(session({
-  store: new pgSession({
-    pool: pool,
-    tableName: 'session',
-    createTableIfMissing: true
-  }),
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  rolling: true,
-  cookie: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: 60 * 1000
-  }
-}));
+app.use(middlewareSesion);
 
 // =====================================
-// RUTAS DE AUTENTICACIÓN
+// PÁGINAS PROTEGIDAS Y ARCHIVOS ESTÁTICOS
 // =====================================
+app.get(PAGINAS_PROTEGIDAS, protegerPaginas);
+app.use(express.static(path.join(__dirname, 'public')));
+
+// =====================================
+// RUTAS DE LA API (sin caché)
+// =====================================
+app.use('/api', sinCache);
 app.use('/api/auth', authRoutes);
-
-// =====================================
-// RUTAS DE USUARIOS
-// =====================================
 app.use('/api/usuarios', usuariosRoutes);
-
-// =====================================
-// RUTAS DE ROLES Y PERMISOS
-// =====================================
 app.use('/api/roles', rolesRoutes);
 
 // =====================================
@@ -74,41 +69,12 @@ app.get('/api/estado', (req, res) => {
 });
 
 // =====================================
-// MANEJAR ERRORES CSRF
+// MANEJO DE ERRORES
 // =====================================
-app.use((err, req, res, next) => {
-  if (
-    err.code === 'EBADCSRFTOKEN' ||
-    (err.status === 403 &&
-      err.message === 'invalid csrf token')
-  ) {
-    return res.status(403).json({
-      mensaje: 'Token CSRF inválido o ausente'
-    });
-  }
-
-  next(err);
-});
-
-// =====================================
-// MANEJAR RUTAS NO ENCONTRADAS
-// =====================================
-app.use((req, res) => {
-  return res.status(404).json({
-    mensaje: 'Ruta no encontrada'
-  });
-});
-
-// =====================================
-// MANEJAR ERRORES INTERNOS
-// =====================================
-app.use((err, req, res, next) => {
-  console.error('Error interno:', err.message);
-
-  return res.status(500).json({
-    mensaje: 'Error interno del servidor'
-  });
-});
+app.use(errorCSRF);
+app.use(errorSolicitud);
+app.use(rutaNoEncontrada);
+app.use(errorInterno);
 
 // =====================================
 // INICIAR SERVIDOR
