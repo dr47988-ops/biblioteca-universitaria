@@ -224,8 +224,41 @@
     }
 
     #mensajeRegistro,
-    #mensajeEdicion {
+    #mensajeEdicion,
+    #mensajeFormRol {
       font-size: 14px;
+    }
+
+    /* ROLES Y PERMISOS */
+
+    .permisos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 0 0 20px;
+    }
+
+    .permisos-grid legend {
+      font-size: 14px;
+      font-weight: bold;
+      color: #19384c;
+      padding: 0 6px;
+    }
+
+    .permisos-grid label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .form-acciones {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     @media (max-width: 600px) {
@@ -241,7 +274,8 @@
         margin-top: 20px;
       }
 
-      .form-grid {
+      .form-grid,
+      .permisos-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -535,8 +569,113 @@
       </form>
     </section>
 
+    <!-- GESTIÓN DE ROLES Y PERMISOS (SOLO SUPERADMIN) -->
+    <section
+      class="panel oculto"
+      id="panelRoles"
+      style="margin-top: 25px;">
+
+      <div class="panel-cabecera">
+        <h3>Roles y permisos</h3>
+
+        <button class="btn-principal" id="btnNuevoRol">
+          + Nuevo rol
+        </button>
+      </div>
+
+      <div
+        id="mensajeRoles"
+        class="mensaje oculto"
+        role="status"
+        aria-live="polite">
+      </div>
+
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Rol</th>
+              <th>Descripción</th>
+              <th>Permisos</th>
+              <th>Usuarios</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody id="tablaRoles">
+            <tr>
+              <td colspan="6">
+                Cargando roles...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <form id="formRol" class="oculto" style="margin-top: 25px;">
+
+        <h3 id="tituloFormRol">Nuevo rol</h3>
+
+        <input type="hidden" id="rolId">
+
+        <div class="form-grid">
+
+          <div class="campo">
+            <label for="rolNombre">
+              Nombre del rol
+            </label>
+            <input
+              type="text"
+              id="rolNombre"
+              required
+              minlength="3"
+              maxlength="50"
+              pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9][A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9 _\-]*">
+          </div>
+
+          <div class="campo">
+            <label for="rolDescripcion">
+              Descripción
+            </label>
+            <input
+              type="text"
+              id="rolDescripcion"
+              maxlength="200">
+          </div>
+
+        </div>
+
+        <fieldset class="permisos-grid" id="rolPermisos">
+          <legend>Permisos del rol</legend>
+        </fieldset>
+
+        <p
+          id="mensajeFormRol"
+          role="status"
+          aria-live="polite">
+        </p>
+
+        <div class="form-acciones">
+          <button
+            type="submit"
+            class="btn-principal"
+            id="btnGuardarRol">
+            Guardar rol
+          </button>
+
+          <button type="button" id="btnCancelarRol">
+            Cancelar
+          </button>
+        </div>
+
+      </form>
+    </section>
+
   </main>
 
+  <script src="/js/sesion.js" defer></script>
+  <script src="/js/roles.js" defer></script>
   <script src="/js/admin.js" defer></script>
 
 </body>

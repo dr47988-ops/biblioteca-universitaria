@@ -61,13 +61,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       const datos = await respuesta.json();
       usuarioActual = datos.usuario;
 
-      if (!usuarioActual || usuarioActual.rol_id !== 1) {
+      if (!usuarioActual) {
         window.location.replace('/');
         return false;
       }
 
       bienvenida.textContent =
-        `Bienvenido, ${usuarioActual.nombre}.`;
+        `Bienvenido, ${usuarioActual.nombre}. Rol: ${usuarioActual.rol}.`;
+
+      // Solo el SuperAdmin administra usuarios y roles (UTN-06).
+      // El backend responde 403 aunque se fuerce la interfaz.
+      if (!usuarioActual.esSuperAdmin) {
+        btnNuevo.classList.add('oculto');
+      }
 
       contenido.classList.remove('oculto');
       return true;
@@ -124,10 +130,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         usuariosActuales.length;
 
       document.getElementById('totalAdministradores').textContent =
-        usuariosActuales.filter(u => u.rol_id === 1).length;
+        usuariosActuales.filter(u => u.rol === 'SuperAdmin').length;
 
       document.getElementById('totalBibliotecarios').textContent =
-        usuariosActuales.filter(u => u.rol_id === 3).length;
+        usuariosActuales.filter(u => u.rol === 'Bibliotecario').length;
 
       tabla.replaceChildren();
 
@@ -172,6 +178,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Acciones
 
         const acciones = fila.insertCell();
+
+        // Auditor y Bibliotecario: solo lectura de usuarios
+        if (!usuarioActual.esSuperAdmin) {
+          acciones.textContent = 'Solo lectura';
+          return;
+        }
 
         // =====================================
         // BOTÓN EDITAR
@@ -490,11 +502,36 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // =====================================
+  // OPCIONES DE ROL EN EL FORMULARIO DE EDICIÓN
+  // =====================================
+  function actualizarSelectorRoles(roles) {
+    const selectorRol = document.getElementById('editarRol');
+
+    selectorRol.replaceChildren(
+      ...roles.map((rol) => new Option(rol.nombre, String(rol.id)))
+    );
+  }
+
+  // =====================================
   // INICIAR PANEL
   // =====================================
   const accesoPermitido = await verificarAcceso();
 
   if (accesoPermitido) {
     await cargarUsuarios();
+
+    if (usuarioActual.esSuperAdmin) {
+      const roles = await window.GestionRoles.iniciar({
+        obtenerTokenCSRF,
+        alCambiar: async (rolesActualizados) => {
+          actualizarSelectorRoles(rolesActualizados);
+          await cargarUsuarios();
+        }
+      });
+
+      if (roles.length > 0) {
+        actualizarSelectorRoles(roles);
+      }
+    }
   }
 });
