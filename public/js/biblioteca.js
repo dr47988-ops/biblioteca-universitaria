@@ -22,6 +22,11 @@ async function peticion(ruta, metodo = 'GET', datos) {
   const respuesta = await fetch(ruta, opciones);
   if (respuesta.status === 204) return;
   const resultado = await respuesta.json();
+  // Sesión vencida o inexistente: volver al login (UTN-07c)
+  if (respuesta.status === 403 && /iniciar sesión/i.test(resultado.mensaje || '')) {
+    window.location.replace('/?sesion=expirada');
+    throw new Error('La sesión ha expirado.');
+  }
   if (!respuesta.ok) throw new Error(resultado.mensaje || 'No se pudo completar la operación.');
   return resultado;
 }
