@@ -56,7 +56,9 @@ Ejecutar:
 
    npm test
 
-El proyecto incluye pruebas iniciales de autenticacion, acceso no autorizado e intentos de inyeccion SQL.
+El proyecto incluye pruebas de autenticacion, acceso no autorizado, inyeccion SQL, permisos por rol, CSRF, sesion, cookies y encabezados HTTP.
+
+Las pruebas de permisos que necesitan usuarios reales usan las variables `TEST_*` de `.env.example`. Si no estan definidas, esas pruebas se omiten. La prueba de expiracion de sesion espera 61 segundos.
 
 ## Seguridad
 
@@ -65,6 +67,52 @@ El proyecto incluye pruebas iniciales de autenticacion, acceso no autorizado e i
 - Proteccion CSRF.
 - Consultas SQL parametrizadas.
 - Variables privadas almacenadas en .env, excluido de Git.
+
+## Roles y permisos
+
+Los permisos se asignan a roles, no a usuarios. Hay cuatro permisos independientes: `crear`, `editar`, `borrar` y `ver_reportes`.
+
+| Rol | Permisos | Usuarios | Roles |
+|---|---|---|---|
+| SuperAdmin | Todos | CRUD | CRUD y asignacion de permisos |
+| Auditor | ver_reportes | Solo lectura | Sin acceso (403) |
+| Bibliotecario | crear, editar, borrar | Solo lectura | Sin acceso (403) |
+
+- Los roles y permisos se consultan en la base de datos en cada solicitud, por lo que un cambio aplica de inmediato.
+- Los roles base no se pueden renombrar ni eliminar, y el SuperAdmin conserva siempre todos los permisos.
+- No se puede eliminar un rol que tenga usuarios asignados.
+- Toda accion sin permiso responde HTTP 403 con un mensaje generico, sin datos ni trazas.
+
+Middleware disponible en `src/middleware/authMiddleware.js`:
+
+- `usuarioAutenticado`: cualquier sesion valida.
+- `requierePermiso('crear')`: exige al menos uno de los permisos indicados.
+- `soloSuperAdmin`: exclusivo del SuperAdmin.
+
+### API de roles (solo SuperAdmin)
+
+| Metodo | Ruta | Descripcion |
+|---|---|---|
+| GET | /api/roles | Lista roles con permisos y cantidad de usuarios |
+| GET | /api/roles/permisos | Catalogo de permisos |
+| POST | /api/roles | Crea un rol `{ nombre, descripcion, permisos: [ids] }` |
+| PUT | /api/roles/:id | Edita un rol y reemplaza sus permisos |
+| DELETE | /api/roles/:id | Elimina un rol sin usuarios |
+
+Las rutas que modifican datos requieren el encabezado `X-CSRF-Token`, obtenido en `GET /api/auth/csrf-token`.
+
+## Protecciones implementadas
+
+| Requerimiento | Implementacion |
+|---|---|
+| SQL Injection (UTN-07a) | Consultas parametrizadas (`$1, $2...`) en todo el backend |
+| XSS (UTN-07b) | Escape al mostrar con `textContent`, CSP sin scripts en linea y validacion de entradas en `src/utils/validacion.js` |
+| Sesion (UTN-07c) | Expira tras 60 s de inactividad en servidor y navegador; cookie `biblioteca.sid` con `HttpOnly`, `SameSite=Strict` y `Secure` en produccion; las paginas internas redirigen al login sin sesion |
+| CSRF (UTN-07d) | Token sincronizado en el encabezado `X-CSRF-Token` y cookie `SameSite=Strict` |
+| Encabezados (UTN-08) | CSP, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, HSTS, `Referrer-Policy` y API sin cache |
+| Fuerza bruta | Maximo 10 intentos fallidos de inicio de sesion por IP cada 15 minutos |
+
+En produccion se debe definir `NODE_ENV=production` para activar la cookie `Secure` y `trust proxy`.
 
 ## Notas
 
