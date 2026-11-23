@@ -24,6 +24,37 @@
   },
   "devDependencies": {
     "jest": "^30.5.2",
+    "jest-html-reporter": "^4.4.3",
+    "jest-junit": "^17.0.0",
     "supertest": "^7.3.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 30000,
+    "reporters": [
+      "default",
+      [
+        "jest-html-reporter",
+        {
+          "pageTitle": "Reporte de pruebas de seguridad - Biblioteca Universitaria",
+          "outputPath": "reports/reporte-pruebas-seguridad.html",
+          "includeFailureMsg": true,
+          "includeSuiteFailure": true,
+          "dateFormat": "dd/mm/yyyy HH:MM:ss",
+          "sort": "status"
+        }
+      ],
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "reports",
+          "outputName": "reporte-pruebas-seguridad.xml",
+          "suiteName": "Pruebas de seguridad - Biblioteca Universitaria"
+        }
+      ]
+    ],
+    "setupFiles": [
+      "<rootDir>/tests/helpers/configuracion.js"
+    ]
   }
 }

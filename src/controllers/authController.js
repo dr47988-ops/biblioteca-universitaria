@@ -1,6 +1,10 @@
 
 const bcrypt = require('bcrypt');
 const pool = require('../config/db');
+const {
+  registrarLoginExitoso,
+  registrarLoginFallido
+} = require('../services/auditoriaService');
 
 // =====================================
 // REGISTRAR USUARIO
@@ -121,6 +125,10 @@ const login = async (req, res) => {
       !correo.trim() ||
       !contrasena
     ) {
+      await registrarLoginFallido(
+        req, correo, null, 'Datos de inicio de sesión no válidos'
+      );
+
       return res.status(400).json({
         mensaje: 'Correo y contraseña obligatorios'
       });
@@ -135,6 +143,10 @@ const login = async (req, res) => {
     );
 
     if (resultado.rows.length === 0) {
+      await registrarLoginFallido(
+        req, correo.trim(), null, 'Correo no registrado'
+      );
+
       return res.status(401).json({
         mensaje: 'Credenciales incorrectas'
       });
@@ -148,6 +160,10 @@ const login = async (req, res) => {
     );
 
     if (!valida) {
+      await registrarLoginFallido(
+        req, correo.trim(), usuario.id, 'Contraseña incorrecta'
+      );
+
       return res.status(401).json({
         mensaje: 'Credenciales incorrectas'
       });
@@ -204,6 +220,8 @@ const login = async (req, res) => {
             errorActualizacion.message
           );
         }
+
+        await registrarLoginExitoso(req, usuario);
 
         return res.status(200).json({
           mensaje: 'Inicio de sesión exitoso',
