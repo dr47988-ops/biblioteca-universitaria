@@ -10,9 +10,17 @@ const path = require('path');
 const pool = require('./src/config/db');
 const authRoutes = require('./src/routes/authRoutes');
 const usuariosRoutes = require('./src/routes/usuariosRoutes');
+const auditoriaRoutes = require('./src/routes/auditoriaRoutes');
+const auditar403 = require('./src/middleware/auditoria403');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Detrás del proxy del hosting (HTTPS) hace falta confiar en él para que
+// la cookie Secure funcione y la auditoría guarde la IP real del cliente.
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
 
 // =====================================
 // CONFIGURACIÓN DE SEGURIDAD
@@ -49,6 +57,11 @@ app.use(session({
 }));
 
 // =====================================
+// AUDITORÍA DE ACCESOS DENEGADOS (403)
+// =====================================
+app.use(auditar403);
+
+// =====================================
 // RUTAS DE AUTENTICACIÓN
 // =====================================
 app.use('/api/auth', authRoutes);
@@ -57,6 +70,11 @@ app.use('/api/auth', authRoutes);
 // RUTAS DE USUARIOS
 // =====================================
 app.use('/api/usuarios', usuariosRoutes);
+
+// =====================================
+// RUTAS DE AUDITORÍA
+// =====================================
+app.use('/api/auditoria', auditoriaRoutes);
 
 // =====================================
 // COMPROBAR ESTADO DEL SERVIDOR
