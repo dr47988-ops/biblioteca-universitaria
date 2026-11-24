@@ -51,6 +51,16 @@ Abrir en el navegador:
 
    http://localhost:3000
 
+## Módulo de biblioteca
+
+Después de iniciar sesión, abrí **Módulo de biblioteca** desde el panel de administración. El catálogo permite buscar por título, autor o categoría. Los formularios y el reporte se habilitan según los permisos asignados a la cuenta.
+
+- **Crear** habilita agregar libros, registrar socios y prestar ejemplares.
+- **Editar** habilita modificar libros y registrar devoluciones.
+- **Borrar** habilita eliminar libros sin historial de préstamos.
+- **Ver reportes** habilita consultar los préstamos vencidos y los días de atraso.
+
+Cada socio puede tener hasta tres préstamos activos. Los préstamos vencen a los siete días naturales y la multa es de ₡100 por cada día de atraso, según la fecha de Costa Rica. Si el equipo ya tiene la base compartida preparada, configurá `DATABASE_URL` con su conexión y usá las tablas existentes.
 ## Variables de entorno
 
 Se configuran en el archivo .env (copiado de .env.example):

@@ -6,6 +6,22 @@ const path = require('path');
 const { middlewareSesion } = require('./src/config/sesion');
 const authRoutes = require('./src/routes/authRoutes');
 const usuariosRoutes = require('./src/routes/usuariosRoutes');
+const rolesRoutes = require('./src/routes/rolesRoutes');
+const bibliotecaRoutes = require('./src/routes/bibliotecaRoutes');
+
+const {
+  encabezadosSeguridad,
+  sinCache,
+  PAGINAS_PROTEGIDAS,
+  protegerPaginas
+} = require('./src/middleware/seguridadMiddleware');
+
+const {
+  errorCSRF,
+  errorSolicitud,
+  rutaNoEncontrada,
+  errorInterno
+} = require('./src/middleware/erroresMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -64,6 +80,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', sinCache);
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuariosRoutes);
+app.use('/api/roles', rolesRoutes);
+app.use('/api/biblioteca', bibliotecaRoutes);
 
 // =====================================
 // COMPROBAR ESTADO DEL SERVIDOR
