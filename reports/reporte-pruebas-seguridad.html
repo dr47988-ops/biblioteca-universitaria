@@ -1,0 +1,277 @@
+<html><head><meta charset="utf-8"/><title>Reporte de pruebas de seguridad - Biblioteca Universitaria</title><style type="text/css">:root {
+  --text-primary: #111;
+  --text-secondary: #4f4f4f;
+  --success: #006633;
+  --success-bright: #80ffbf;
+  --danger: #cc071e;
+  --danger-bright: #fbdfe0;
+  --warning: #995c00;
+  --warning-bright: #ffeea8;
+  --panel: #eee;
+  --border: #949494;
+  --disabled: #6b6b6b;
+}
+
+html,
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: var(--text-primary);
+}
+body {
+  padding: 2rem 1rem;
+}
+.jesthtml-content {
+  margin: 0 auto;
+  max-width: 70rem;
+}
+header {
+  display: flex;
+  align-items: center;
+}
+#title {
+  margin: 0;
+  flex-grow: 1;
+}
+#logo {
+  height: 4rem;
+}
+#timestamp {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+#metadata-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.additional-information-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/** SUMMARY */
+#summary {
+  color: var(--text-primary);
+  display: flex;
+  font-family: monospace;
+  font-size: 1rem;
+}
+#summary > div {
+  margin-right: 0.5rem;
+  background: var(--panel);
+  padding: 1rem;
+  min-width: 15rem;
+}
+#summary > div:last-child {
+  margin-right: 0;
+}
+@media only screen and (max-width: 720px) {
+  #summary {
+    flex-direction: column;
+  }
+  #summary > div {
+    margin-right: 0;
+    margin-top: 1rem;
+  }
+  #summary > div:first-child {
+    margin-top: 0;
+  }
+}
+
+.summary-total {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.summary-passed {
+  color: var(--success);
+  border-left: 0.4rem solid var(--success);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-failed,
+.summary-obsolete-snapshots {
+  color: var(--danger);
+  border-left: 0.4rem solid var(--danger);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-pending {
+  color: var(--warning);
+  border-left: 0.4rem solid var(--warning);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-empty {
+  color: var(--disabled);
+  border-left: 0.4rem solid var(--disabled);
+  margin-bottom: 0.15rem;
+}
+
+.test-result {
+  padding: 1rem;
+  margin-bottom: 0.25rem;
+}
+.test-result:last-child {
+  border: 0;
+}
+.test-result.passed {
+  background-color: var(--success-bright);
+  color: var(--success);
+}
+.test-result.failed {
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.test-result.pending {
+  background-color: var(--warning-bright);
+  color: var(--warning);
+}
+
+.test-info {
+  display: flex;
+  justify-content: space-between;
+}
+.test-suitename {
+  width: 20%;
+  text-align: left;
+  font-weight: bold;
+  word-break: break-word;
+}
+.test-title {
+  width: 40%;
+  text-align: left;
+  font-style: italic;
+}
+.test-status {
+  width: 20%;
+  text-align: right;
+}
+.test-duration {
+  width: 10%;
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+.failureMessages {
+  padding: 0 1rem;
+  margin-top: 1rem;
+  border-top: 1px dashed var(--danger);
+}
+.failureMessages.suiteFailure {
+  border-top: none;
+}
+.failureMsg {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.suite-container {
+  margin-bottom: 1rem;
+}
+.suite-info {
+  padding: 1rem;
+  background-color: var(--panel);
+  color: var(--text-secondary);
+  border: 0.15rem solid;
+  border-color: var(--panel);
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.suite-info:hover {
+  border-color: var(--border);
+  cursor: pointer;
+}
+.suite-info .suite-path {
+  word-break: break-all;
+  flex-grow: 1;
+  font-family: monospace;
+  font-size: 1rem;
+}
+.suite-info .suite-time {
+  margin-left: 1rem;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.85rem;
+}
+.suite-info .suite-time.warn {
+  background-color: var(--danger);
+  color: #fff;
+}
+.suite-info:before {
+  content: "\2303";
+  display: inline-block;
+  margin-right: 1rem;
+  transform: rotate(180deg) translateY(0.15rem);
+}
+.suite-container[open] .suite-info:before {
+  transform: rotate(0deg) translateY(0.15rem);
+}
+
+/* CONSOLE LOGS */
+.suite-consolelog {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--panel);
+}
+.suite-consolelog-header {
+  font-weight: bold;
+}
+.suite-consolelog-item {
+  padding: 0.5rem;
+}
+.suite-consolelog-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-consolelog-item-origin {
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+.suite-consolelog-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+
+/* OBSOLETE SNAPSHOTS */
+.suite-obsolete-snapshots {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.suite-obsolete-snapshots-header {
+  font-weight: bold;
+}
+.suite-obsolete-snapshots-item {
+  padding: 0.5rem;
+}
+.suite-obsolete-snapshots-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-obsolete-snapshots-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+</style></head><body><main class="jesthtml-content"><header><h1 id="title">Reporte de pruebas de seguridad - Biblioteca Universitaria</h1></header><section id="metadata-container"><div id="timestamp">Started: 23/11/2026 21:48:50</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (5)</div><div class="summary-passed ">5 passed</div><div class="summary-failed  summary-empty">0 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (89)</div><div class="summary-passed ">68 passed</div><div class="summary-failed  summary-empty">0 failed</div><div class="summary-pending ">21 pending</div></div></div></section><details id="suite-1" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\dr479\OneDrive\Escritorio\biblioteca-universitaria\tests\biblioteca-seguridad.test.js</div><div class="suite-time">1.182s</div></summary><div class="suite-tests"><div class="test-result pending"><div class="test-info"><div class="test-suitename">Auditor: solo lectura del catálogo</div><div class="test-title">puede consultar el catálogo</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Auditor: solo lectura del catálogo</div><div class="test-title">no accede a los datos de socios (dato sensible)</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Auditor: solo lectura del catálogo</div><div class="test-title">no accede a los préstamos activos (historial)</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Auditor: solo lectura del catálogo</div><div class="test-title">no puede crear libros aunque envíe token CSRF</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Auditor: solo lectura del catálogo</div><div class="test-title">el reporte de vencidos no expone correos de socios</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Bibliotecario: CRUD con datos mínimos</div><div class="test-title">la lista de socios no incluye correos</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Bibliotecario: CRUD con datos mínimos</div><div class="test-title">tiene permiso borrar (404 si el libro no existe)</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Bibliotecario: CRUD con datos mínimos</div><div class="test-title">crear libro sin token CSRF es rechazado</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Bibliotecario: CRUD con datos mínimos</div><div class="test-title">TC-02: búsqueda con UNION SELECT no expone datos</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Bibliotecario: CRUD con datos mínimos</div><div class="test-title">TC-03: script en la búsqueda se devuelve como JSON, no HTML</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div></div></details><details id="suite-2" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\dr479\OneDrive\Escritorio\biblioteca-universitaria\tests\permisos-seguridad.test.js</div><div class="suite-time">1.28s</div></summary><div class="suite-tests"><div class="test-result pending"><div class="test-info"><div class="test-suitename">Sesión y cookies (UTN-07c)</div><div class="test-title">la cookie de sesión es HttpOnly, SameSite y sin datos del usuario</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Sesión y cookies (UTN-07c)</div><div class="test-title">la sesión se invalida en el servidor tras 60 s de inactividad</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">CSRF (UTN-07d)</div><div class="test-title">crear rol sin token CSRF es rechazado</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">CSRF (UTN-07d)</div><div class="test-title">token CSRF falso es rechazado</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Permisos por rol (UTN-05, UTN-06)</div><div class="test-title">TC-06: Auditor no puede consultar roles</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Permisos por rol (UTN-05, UTN-06)</div><div class="test-title">Auditor puede leer usuarios</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Permisos por rol (UTN-05, UTN-06)</div><div class="test-title">TC-07: Bibliotecario no puede borrar usuarios por API</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Permisos por rol (UTN-05, UTN-06)</div><div class="test-title">Bibliotecario no puede crear roles aunque envíe token</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Permisos por rol (UTN-05, UTN-06)</div><div class="test-title">SuperAdmin crea, edita y elimina un rol</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Permisos por rol (UTN-05, UTN-06)</div><div class="test-title">XSS almacenado: nombre de rol con etiquetas es rechazado</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div><div class="test-result pending"><div class="test-info"><div class="test-suitename">Permisos por rol (UTN-05, UTN-06)</div><div class="test-title">los roles base no se pueden eliminar</div><div class="test-status">pending</div><div class="test-duration"> </div></div></div></div></details><details id="suite-3" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\dr479\OneDrive\Escritorio\biblioteca-universitaria\tests\sesion.test.js</div><div class="suite-time warn">67.358s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename"> </div><div class="test-title">TC-24 la sesión se cierra tras 61 segundos sin actividad</div><div class="test-status">passed</div><div class="test-duration">63.728s</div></div></div></div></details><details id="suite-4" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\dr479\OneDrive\Escritorio\biblioteca-universitaria\tests\seguridad.test.js</div><div class="suite-time warn">28.966s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Estado del servidor</div><div class="test-title">TC-00 GET /api/estado responde 200</div><div class="test-status">passed</div><div class="test-duration">0.012s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SQL Injection (UTN-07a)</div><div class="test-title">TC-01 login con ' OR '1'='1 no da acceso</div><div class="test-status">passed</div><div class="test-duration">0.214s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SQL Injection (UTN-07a)</div><div class="test-title">TC-02 login con comentario SQL y DROP TABLE no altera la base</div><div class="test-status">passed</div><div class="test-duration">0.393s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SQL Injection (UTN-07a)</div><div class="test-title">TC-03 login con objetos o arreglos en lugar de texto se rechaza</div><div class="test-status">passed</div><div class="test-duration">0.316s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SQL Injection (UTN-07a)</div><div class="test-title">TC-04 ID con SQL en la URL se rechaza antes de llegar a la base</div><div class="test-status">passed</div><div class="test-duration">1.5s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">XSS (UTN-07b)</div><div class="test-title">TC-05 XSS almacenado: el texto se guarda literal y sale como JSON, no como HTML</div><div class="test-status">passed</div><div class="test-duration">2.387s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">XSS (UTN-07b)</div><div class="test-title">TC-06 XSS reflejado: la entrada de la URL no vuelve en la respuesta</div><div class="test-status">passed</div><div class="test-duration">1.331s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">XSS (UTN-07b)</div><div class="test-title">TC-07 el código del navegador no usa innerHTML con datos ni scripts en línea</div><div class="test-status">passed</div><div class="test-duration">0.016s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CSRF (UTN-07d)</div><div class="test-title">TC-08 registrar usuario sin token CSRF se rechaza y no crea nada</div><div class="test-status">passed</div><div class="test-duration">2.011s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CSRF (UTN-07d)</div><div class="test-title">TC-09 eliminar usuario con token falso se rechaza y el usuario sigue existiendo</div><div class="test-status">passed</div><div class="test-duration">1.515s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CSRF (UTN-07d)</div><div class="test-title">TC-10 con token válido la misma acción sí funciona</div><div class="test-status">passed</div><div class="test-duration">1.764s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CSRF (UTN-07d)</div><div class="test-title">TC-11 un token de otra sesión no sirve</div><div class="test-status">passed</div><div class="test-duration">2.496s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CSRF (UTN-07d)</div><div class="test-title">TC-12 cerrar sesión sin token CSRF se rechaza y la sesión sigue activa</div><div class="test-status">passed</div><div class="test-duration">1.401s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06)</div><div class="test-title">TC-13 sin sesión, ninguna ruta protegida responde datos</div><div class="test-status">passed</div><div class="test-duration">0.065s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06)</div><div class="test-title">TC-14 Auditor solo lee usuarios: editar, borrar y registrar dan 403</div><div class="test-status">passed</div><div class="test-duration">3.174s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06)</div><div class="test-title">TC-14 Bibliotecario solo lee usuarios: editar, borrar y registrar dan 403</div><div class="test-status">passed</div><div class="test-duration">2.523s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06)</div><div class="test-title">TC-15 la respuesta 403 no expone datos sensibles ni trazas</div><div class="test-status">passed</div><div class="test-duration">1.182s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Sesión y cookies (UTN-07c)</div><div class="test-title">TC-16 la cookie de sesión es HttpOnly, SameSite, dura 60 s y no lleva datos del usuario</div><div class="test-status">passed</div><div class="test-duration">0.868s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Sesión y cookies (UTN-07c)</div><div class="test-title">TC-17 en producción con HTTPS la cookie incluye Secure</div><div class="test-status">passed</div><div class="test-duration">1.061s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Sesión y cookies (UTN-07c)</div><div class="test-title">TC-18 cerrar sesión invalida la cookie en el servidor</div><div class="test-status">passed</div><div class="test-duration">1.4s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encabezados HTTP (UTN-08)</div><div class="test-title">TC-19 /api/estado incluye CSP, X-Frame-Options, nosniff y HSTS</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encabezados HTTP (UTN-08)</div><div class="test-title">TC-19 / incluye CSP, X-Frame-Options, nosniff y HSTS</div><div class="test-status">passed</div><div class="test-duration">0.015s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encabezados HTTP (UTN-08)</div><div class="test-title">TC-19 /admin.html incluye CSP, X-Frame-Options, nosniff y HSTS</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encabezados HTTP (UTN-08)</div><div class="test-title">TC-19 /ruta-que-no-existe incluye CSP, X-Frame-Options, nosniff y HSTS</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encabezados HTTP (UTN-08)</div><div class="test-title">TC-20 la CSP no permite scripts en línea ni eval</div><div class="test-status">passed</div><div class="test-duration">0.012s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Autenticación (credenciales)</div><div class="test-title">TC-21 contraseña incorrecta devuelve 401 con mensaje genérico</div><div class="test-status">passed</div><div class="test-duration">0.499s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Autenticación (credenciales)</div><div class="test-title">TC-22 correo inexistente da el mismo mensaje que contraseña incorrecta</div><div class="test-status">passed</div><div class="test-duration">0.196s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Autenticación (credenciales)</div><div class="test-title">TC-23 las contraseñas se guardan con bcrypt de costo 12 o más</div><div class="test-status">passed</div><div class="test-duration">0.094s</div></div></div></div></details><details id="suite-5" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\dr479\OneDrive\Escritorio\biblioteca-universitaria\tests\auditoria.test.js</div><div class="suite-time warn">23.976s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Inicios de sesión</div><div class="test-title">TC-25 un inicio de sesión fallido queda registrado con fecha, hora e IP</div><div class="test-status">passed</div><div class="test-duration">0.679s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Inicios de sesión</div><div class="test-title">TC-26 un intento con un correo que no existe también se registra</div><div class="test-status">passed</div><div class="test-duration">0.368s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Inicios de sesión</div><div class="test-title">TC-27 un inicio de sesión exitoso queda registrado con el usuario y la IP</div><div class="test-status">passed</div><div class="test-duration">1.198s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Inicios de sesión</div><div class="test-title">TC-28 la contraseña escrita nunca se guarda en la auditoría</div><div class="test-status">passed</div><div class="test-duration">0.772s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Inicios de sesión</div><div class="test-title">TC-29 un correo con SQL ('); DROP TABLE...) se guarda como texto y no se ejecuta</div><div class="test-status">passed</div><div class="test-duration">0.464s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Accesos denegados 403</div><div class="test-title">TC-30 un 403 sin sesión registra la ruta, el método y que fue anónimo</div><div class="test-status">passed</div><div class="test-duration">0.871s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Accesos denegados 403</div><div class="test-title">TC-31 un 403 con usuario registra quién fue y la ruta que intentó</div><div class="test-status">passed</div><div class="test-duration">1.506s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Accesos denegados 403</div><div class="test-title">TC-32 un 403 por token CSRF inválido también queda registrado</div><div class="test-status">passed</div><div class="test-duration">1.325s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Cambios de rol y permisos</div><div class="test-title">TC-33 cambiar el rol de un usuario registra quién lo hizo y el rol anterior y nuevo</div><div class="test-status">passed</div><div class="test-duration">2.323s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Cambios de rol y permisos</div><div class="test-title">TC-34 editar un usuario sin cambiar su rol no genera un cambio de rol</div><div class="test-status">passed</div><div class="test-duration">2.542s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Cambios de rol y permisos</div><div class="test-title">TC-35 el cambio de permisos de un rol se registra con los permisos antes y después</div><div class="test-status">passed</div><div class="test-duration">0.297s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Consulta de la auditoría (solo SuperAdmin)</div><div class="test-title">TC-36 el SuperAdmin consulta los registros, del más reciente al más antiguo</div><div class="test-status">passed</div><div class="test-duration">1.459s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Consulta de la auditoría (solo SuperAdmin)</div><div class="test-title">TC-37 el filtro por tipo solo devuelve ese tipo</div><div class="test-status">passed</div><div class="test-duration">1.439s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Consulta de la auditoría (solo SuperAdmin)</div><div class="test-title">TC-38 los filtros inválidos o con SQL se rechazan con 400</div><div class="test-status">passed</div><div class="test-duration">3.18s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Consulta de la auditoría (solo SuperAdmin)</div><div class="test-title">TC-39 el Auditor, el Bibliotecario y quien no inició sesión reciben 403</div><div class="test-status">passed</div><div class="test-duration">3.094s</div></div></div></div></details><details id="suite-6" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\dr479\OneDrive\Escritorio\biblioteca-universitaria\tests\biblioteca-seguridad.test.js</div><div class="suite-time">1.182s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">get /api/biblioteca/permisos responde 403</div><div class="test-status">passed</div><div class="test-duration">0.016s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">get /api/biblioteca/libros responde 403</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">post /api/biblioteca/libros responde 403</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">put /api/biblioteca/libros/1 responde 403</div><div class="test-status">passed</div><div class="test-duration">0.011s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">delete /api/biblioteca/libros/1 responde 403</div><div class="test-status">passed</div><div class="test-duration">0.013s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">get /api/biblioteca/socios responde 403</div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">post /api/biblioteca/socios responde 403</div><div class="test-status">passed</div><div class="test-duration">0.013s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">get /api/biblioteca/prestamos responde 403</div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">post /api/biblioteca/prestamos responde 403</div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">get /api/biblioteca/prestamos/vencidos responde 403</div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">post /api/biblioteca/prestamos/1/devolucion responde 403</div><div class="test-status">passed</div><div class="test-duration">0.013s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Biblioteca sin sesión</div><div class="test-title">la página de biblioteca redirige al login</div><div class="test-status">passed</div><div class="test-duration">0.012s</div></div></div></div></details><details id="suite-7" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\dr479\OneDrive\Escritorio\biblioteca-universitaria\tests\permisos-seguridad.test.js</div><div class="suite-time">1.28s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encabezados HTTP de seguridad (UTN-08)</div><div class="test-title">incluye CSP, X-Frame-Options, nosniff y HSTS</div><div class="test-status">passed</div><div class="test-duration">0.02s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encabezados HTTP de seguridad (UTN-08)</div><div class="test-title">las respuestas de la API no se guardan en caché</div><div class="test-status">passed</div><div class="test-duration">0.023s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c)</div><div class="test-title">get /api/roles responde 403 sin exponer datos</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c)</div><div class="test-title">get /api/roles/permisos responde 403 sin exponer datos</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c)</div><div class="test-title">post /api/roles responde 403 sin exponer datos</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c)</div><div class="test-title">put /api/roles/1 responde 403 sin exponer datos</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c)</div><div class="test-title">delete /api/roles/1 responde 403 sin exponer datos</div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c)</div><div class="test-title">post /api/auth/registro responde 403 sin exponer datos</div><div class="test-status">passed</div><div class="test-duration">0.015s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c)</div><div class="test-title">get /api/auth/mi-sesion responde 403 sin exponer datos</div><div class="test-status">passed</div><div class="test-duration">0.019s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c)</div><div class="test-title">el panel administrativo redirige al login sin sesión</div><div class="test-status">passed</div><div class="test-duration">0.011s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Errores controlados</div><div class="test-title">JSON malformado responde 400 sin trazas</div><div class="test-status">passed</div><div class="test-duration">0.033s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Errores controlados</div><div class="test-title">ruta inexistente responde 404 genérico</div><div class="test-status">passed</div><div class="test-duration">0.011s</div></div></div></div></details></main></body></html>
