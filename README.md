@@ -72,23 +72,7 @@ Ejecutar todas las pruebas con un solo comando:
 
    npm test
 
-El comando corre 44 casos en 3 archivos (tests/seguridad.test.js, tests/auditoria.test.js y tests/sesion.test.js) y cubre SQL Injection, XSS, CSRF, control de acceso (403), sesion, cookies, encabezados HTTP y auditoria. La prueba de sesion espera 61 segundos reales, por eso toda la corrida dura alrededor de 70 segundos.
-
-Al terminar se generan dos reportes en la carpeta reports/:
-
-- reports/reporte-pruebas-seguridad.html (abrir en el navegador)
-- reports/reporte-pruebas-seguridad.xml (formato JUnit)
-
-Las pruebas crean usuarios y registros de auditoria temporales y los eliminan al finalizar. Si una corrida se interrumpe, quedan usuarios con identificacion que empieza por TEST- y se limpian en la siguiente ejecucion.
-
-## Auditoria
-
-Se registran en la tabla auditoria: inicios de sesion exitosos y fallidos (fecha, hora e IP), cambios de rol de un usuario, cambios de permisos de un rol y todos los accesos denegados con HTTP 403 (ruta, metodo, usuario y hora).
-
-- Solo el SuperAdmin puede consultarlos: pantalla /auditoria.html (boton Auditoria en el panel) o GET /api/auditoria (filtros opcionales tipo, limite y pagina).
-- Los 403 se registran de forma automatica con un middleware (src/middleware/auditoria403.js), no hay que llamarlo en cada ruta.
-- Para registrar cambios de permisos, el modulo de roles debe llamar a registrarCambioPermisos de src/services/auditoriaService.js con el rol, los permisos anteriores y los nuevos.
-- Nunca se guardan contrasenas en la auditoria.
+El proyecto incluye pruebas iniciales de autenticacion, acceso no autorizado e intentos de inyeccion SQL.
 
 ## Seguridad
 
@@ -100,10 +84,6 @@ Se registran en la tabla auditoria: inicios de sesion exitosos y fallidos (fecha
 - Sesion que expira a los 60 segundos de inactividad, con cookie HttpOnly.
 - Consultas SQL parametrizadas.
 - Variables privadas almacenadas en .env, excluido de Git.
-
-## Publicacion
-
-URL del sistema publicado: (completar con la direccion del despliegue)
 
 ## Notas
 

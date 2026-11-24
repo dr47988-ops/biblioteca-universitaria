@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 
@@ -9,8 +8,8 @@ const {
 } = require('../controllers/usuariosController');
 
 const {
-  verificarSesion,
-  permitirRoles
+  usuarioAutenticado,
+  soloSuperAdmin
 } = require('../middleware/authMiddleware');
 
 const {
@@ -19,11 +18,11 @@ const {
 
 // =====================================
 // CONSULTAR USUARIOS
+// SuperAdmin, Auditor y Bibliotecario tienen lectura (UTN-06)
 // =====================================
 router.get(
   '/',
-  verificarSesion,
-  permitirRoles(1, 2, 3),
+  usuarioAutenticado,
   listarUsuarios
 );
 
@@ -32,8 +31,7 @@ router.get(
 // =====================================
 router.put(
   '/:id',
-  verificarSesion,
-  permitirRoles(1),
+  soloSuperAdmin,
   csrfSynchronisedProtection,
   actualizarUsuario
 );
@@ -43,8 +41,7 @@ router.put(
 // =====================================
 router.delete(
   '/:id',
-  verificarSesion,
-  permitirRoles(1),
+  soloSuperAdmin,
   csrfSynchronisedProtection,
   eliminarUsuario
 );
