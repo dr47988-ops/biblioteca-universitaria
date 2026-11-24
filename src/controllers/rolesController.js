@@ -1,11 +1,12 @@
 const pool = require('../config/db');
 const validar = require('../utils/validacion');
 const { ROL_SUPERADMIN } = require('../middleware/authMiddleware');
+const { registrarCambioPermisos } = require('../services/auditoriaService');
 
-// Roles requeridos por el enunciado: no se pueden renombrar ni borrar
+// Roles requeridos por el enunciado
 const ROLES_BASE = [ROL_SUPERADMIN, 'Auditor', 'Bibliotecario'];
 
-// Letras (con tildes), números, espacios, guion y guion bajo
+// Letras, números, espacios, guion y guion bajo
 const PATRON_NOMBRE_ROL = /^[\p{L}\p{N}][\p{L}\p{N} _-]*$/u;
 
 // =====================================
@@ -111,7 +112,9 @@ function responderError(res, error, accion) {
   }
 
   if (error.code === '23505') {
-    return res.status(409).json({ mensaje: 'Ya existe un rol con ese nombre.' });
+    return res.status(409).json({
+      mensaje: 'Ya existe un rol con ese nombre.'
+    });
   }
 
   console.error(`Error al ${accion}:`, error.message);
@@ -186,7 +189,7 @@ const actualizarRol = async (req, res) => {
     const id = validar.id(req.params.id, 'ID de rol');
     const datos = datosRol(req.body);
 
-    const rol = await transaccion(async (cliente) => {
+    const { rol, permisosAnteriores } = await transaccion(async (cliente) => {
       const actual = await cliente.query(
         'SELECT nombre FROM public.roles WHERE id = $1 FOR UPDATE',
         [id]
@@ -202,6 +205,10 @@ const actualizarRol = async (req, res) => {
         throw errorHttp(400, 'Los roles base no se pueden renombrar.');
       }
 
+      // Obtener los permisos anteriores
+      const rolAnterior = (await obtenerRol(cliente, id))[0];
+      const permisosAnteriores = rolAnterior.permisos;
+
       await cliente.query(
         `UPDATE public.roles
          SET nombre = $1, descripcion = $2
@@ -209,8 +216,7 @@ const actualizarRol = async (req, res) => {
         [datos.nombre, datos.descripcion, id]
       );
 
-      // El SuperAdmin conserva siempre todos los permisos para que
-      // nadie pueda quedarse sin acceso a la administración.
+      // El SuperAdmin conserva todos sus permisos
       if (nombreActual === ROL_SUPERADMIN) {
         await cliente.query(
           `INSERT INTO public.rol_permiso (rol_id, permiso_id)
@@ -222,8 +228,24 @@ const actualizarRol = async (req, res) => {
         await asignarPermisos(cliente, id, datos.permisos);
       }
 
-      return (await obtenerRol(cliente, id))[0];
+      const rol = (await obtenerRol(cliente, id))[0];
+
+      return { rol, permisosAnteriores };
     });
+
+    // Comparar permisos anteriores y actuales
+    const antes = [...permisosAnteriores].sort();
+    const despues = [...rol.permisos].sort();
+
+    // Registrar auditoría si hubo cambios de permisos
+    if (JSON.stringify(antes) !== JSON.stringify(despues)) {
+      await registrarCambioPermisos(
+        req,
+        rol.nombre,
+        permisosAnteriores,
+        rol.permisos
+      );
+    }
 
     return res.status(200).json({
       mensaje: 'Rol actualizado correctamente',
@@ -289,6 +311,9 @@ const eliminarRol = async (req, res) => {
   }
 };
 
+// =====================================
+// EXPORTAR FUNCIONES
+// =====================================
 module.exports = {
   listarRoles,
   listarPermisos,

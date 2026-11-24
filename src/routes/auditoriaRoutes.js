@@ -7,8 +7,7 @@ const {
 } = require('../controllers/auditoriaController');
 
 const {
-  verificarSesion,
-  permitirRoles
+  soloSuperAdmin
 } = require('../middleware/authMiddleware');
 
 // =====================================
@@ -16,8 +15,7 @@ const {
 // =====================================
 router.get(
   '/',
-  verificarSesion,
-  permitirRoles(1),
+  soloSuperAdmin,
   listarAuditoria
 );
 

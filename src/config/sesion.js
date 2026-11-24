@@ -25,7 +25,7 @@ const middlewareSesion = session({
     tableName: 'session',
     createTableIfMissing: true,
     // Evitar temporizadores abiertos durante las pruebas
-    pruneSessionInterval: process.env.NODE_ENV === 'test' ? false : 60
+    pruneSessionInterval: process.env.JEST_WORKER_ID !== undefined ? false : 60
   }),
   secret: process.env.SESSION_SECRET,
   resave: false,

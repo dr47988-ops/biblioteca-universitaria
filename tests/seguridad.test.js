@@ -396,9 +396,9 @@ describe('Sesión y cookies (UTN-07c)', () => {
     expect(cookies).toHaveLength(1);
 
     const cookie = cookies[0];
-    expect(cookie).toMatch(/^connect\.sid=/);
+    expect(cookie).toMatch(/^biblioteca\.sid=/);
     expect(cookie).toMatch(/;\s*HttpOnly/i);
-    expect(cookie).toMatch(/;\s*SameSite=Lax/i);
+    expect(cookie).toMatch(/;\s*SameSite=Strict/i);
 
     // La cookie vence 60 segundos después de la respuesta
     const vence = new Date(cookie.match(/Expires=([^;]+)/i)[1]).getTime();
@@ -489,7 +489,7 @@ describe('Encabezados HTTP (UTN-08)', () => {
     expect(directiva('script-src')).toBe("script-src 'self'");
     expect(directiva('script-src-attr')).toBe("script-src-attr 'none'");
     expect(directiva('object-src')).toBe("object-src 'none'");
-    expect(directiva('frame-ancestors')).toBe("frame-ancestors 'self'");
+    expect(directiva('frame-ancestors')).toBe("frame-ancestors 'none'");
     expect(csp).not.toMatch(/unsafe-eval/);
   });
 });
