@@ -1,5 +1,8 @@
 
 const pool = require('../config/db');
+const {
+  registrarCambioRol
+} = require('../services/auditoriaService');
 
 // =====================================
 // OBTENER LA LISTA DE USUARIOS
@@ -86,6 +89,12 @@ const actualizarUsuario = async (req, res) => {
       });
     }
 
+    // Guardar el rol anterior para dejar constancia si cambia
+    const anterior = await pool.query(
+      'SELECT rol_id FROM public.usuarios WHERE id = $1',
+      [id]
+    );
+
     const resultado = await pool.query(
       `UPDATE public.usuarios
        SET identificacion = $1,
@@ -115,6 +124,18 @@ const actualizarUsuario = async (req, res) => {
       return res.status(404).json({
         mensaje: 'Usuario no encontrado'
       });
+    }
+
+    if (
+      anterior.rows.length > 0 &&
+      anterior.rows[0].rol_id !== rol_id
+    ) {
+      await registrarCambioRol(
+        req,
+        resultado.rows[0],
+        anterior.rows[0].rol_id,
+        rol_id
+      );
     }
 
     return res.status(200).json({

@@ -1,4 +1,4 @@
-﻿# Biblioteca Universitaria
+# Biblioteca Universitaria
 
 Proyecto 2 - Pruebas de Software (ISW-622)
 Universidad Tecnica Nacional (UTN)
@@ -35,8 +35,9 @@ Crear una base de datos PostgreSQL y ejecutar los siguientes archivos SQL en ord
 2. database/02_biblioteca.sql
 3. database/03_datos_iniciales.sql
 4. database/04_datos_ejemplo.sql
+5. database/05_auditoria.sql
 
-El ultimo archivo incluye cinco libros y tres socios ficticios.
+El archivo 04 incluye cinco libros y tres socios ficticios. El archivo 05 crea la tabla de auditoria.
 
 ## Iniciar el servidor
 
@@ -50,69 +51,39 @@ Abrir en el navegador:
 
    http://localhost:3000
 
+## Variables de entorno
+
+Se configuran en el archivo .env (copiado de .env.example):
+
+- DATABASE_URL: cadena de conexion a PostgreSQL.
+- PORT: puerto del servidor (3000 por defecto).
+- NODE_ENV: development o production. En production la cookie de sesion se marca Secure y se confia en el proxy del hosting (necesario para HTTPS y para guardar la IP real en la auditoria).
+- SESSION_SECRET: clave larga y aleatoria para firmar la cookie de sesion.
+
+## Credenciales de prueba
+
+El sistema no trae usuarios con contrasena. El primer SuperAdmin se crea con el script de abajo y despues puede registrar mas usuarios desde el panel. Las pruebas automatizadas no usan esas cuentas: crean sus propios usuarios temporales (correo terminado en @test.biblioteca.local) y los borran al terminar.
+
 ## Pruebas automatizadas
 
-Ejecutar:
+Requisitos: haber ejecutado los scripts SQL (incluido el 05) y tener el archivo .env configurado.
+
+Ejecutar todas las pruebas con un solo comando:
 
    npm test
 
-El proyecto incluye pruebas de autenticacion, acceso no autorizado, inyeccion SQL, permisos por rol, CSRF, sesion, cookies y encabezados HTTP.
-
-Las pruebas de permisos que necesitan usuarios reales usan las variables `TEST_*` de `.env.example`. Si no estan definidas, esas pruebas se omiten. La prueba de expiracion de sesion espera 61 segundos.
+El proyecto incluye pruebas iniciales de autenticacion, acceso no autorizado e intentos de inyeccion SQL.
 
 ## Seguridad
 
 - Contrasenas protegidas con bcrypt.
 - Control de acceso mediante sesiones y roles.
 - Proteccion CSRF.
+- Registro de auditoria consultable solo por el SuperAdmin.
+- Encabezados de seguridad con helmet (CSP, X-Frame-Options, nosniff y HSTS).
+- Sesion que expira a los 60 segundos de inactividad, con cookie HttpOnly.
 - Consultas SQL parametrizadas.
 - Variables privadas almacenadas en .env, excluido de Git.
-
-## Roles y permisos
-
-Los permisos se asignan a roles, no a usuarios. Hay cuatro permisos independientes: `crear`, `editar`, `borrar` y `ver_reportes`.
-
-| Rol | Permisos | Usuarios | Roles |
-|---|---|---|---|
-| SuperAdmin | Todos | CRUD | CRUD y asignacion de permisos |
-| Auditor | ver_reportes | Solo lectura | Sin acceso (403) |
-| Bibliotecario | crear, editar, borrar | Solo lectura | Sin acceso (403) |
-
-- Los roles y permisos se consultan en la base de datos en cada solicitud, por lo que un cambio aplica de inmediato.
-- Los roles base no se pueden renombrar ni eliminar, y el SuperAdmin conserva siempre todos los permisos.
-- No se puede eliminar un rol que tenga usuarios asignados.
-- Toda accion sin permiso responde HTTP 403 con un mensaje generico, sin datos ni trazas.
-
-Middleware disponible en `src/middleware/authMiddleware.js`:
-
-- `usuarioAutenticado`: cualquier sesion valida.
-- `requierePermiso('crear')`: exige al menos uno de los permisos indicados.
-- `soloSuperAdmin`: exclusivo del SuperAdmin.
-
-### API de roles (solo SuperAdmin)
-
-| Metodo | Ruta | Descripcion |
-|---|---|---|
-| GET | /api/roles | Lista roles con permisos y cantidad de usuarios |
-| GET | /api/roles/permisos | Catalogo de permisos |
-| POST | /api/roles | Crea un rol `{ nombre, descripcion, permisos: [ids] }` |
-| PUT | /api/roles/:id | Edita un rol y reemplaza sus permisos |
-| DELETE | /api/roles/:id | Elimina un rol sin usuarios |
-
-Las rutas que modifican datos requieren el encabezado `X-CSRF-Token`, obtenido en `GET /api/auth/csrf-token`.
-
-## Protecciones implementadas
-
-| Requerimiento | Implementacion |
-|---|---|
-| SQL Injection (UTN-07a) | Consultas parametrizadas (`$1, $2...`) en todo el backend |
-| XSS (UTN-07b) | Escape al mostrar con `textContent`, CSP sin scripts en linea y validacion de entradas en `src/utils/validacion.js` |
-| Sesion (UTN-07c) | Expira tras 60 s de inactividad en servidor y navegador; cookie `biblioteca.sid` con `HttpOnly`, `SameSite=Strict` y `Secure` en produccion; las paginas internas redirigen al login sin sesion |
-| CSRF (UTN-07d) | Token sincronizado en el encabezado `X-CSRF-Token` y cookie `SameSite=Strict` |
-| Encabezados (UTN-08) | CSP, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, HSTS, `Referrer-Policy` y API sin cache |
-| Fuerza bruta | Maximo 10 intentos fallidos de inicio de sesion por IP cada 15 minutos |
-
-En produccion se debe definir `NODE_ENV=production` para activar la cookie `Secure` y `trust proxy`.
 
 ## Notas
 

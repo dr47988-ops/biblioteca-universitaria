@@ -6,24 +6,15 @@ const path = require('path');
 const { middlewareSesion } = require('./src/config/sesion');
 const authRoutes = require('./src/routes/authRoutes');
 const usuariosRoutes = require('./src/routes/usuariosRoutes');
-const rolesRoutes = require('./src/routes/rolesRoutes');
-
-const {
-  encabezadosSeguridad,
-  sinCache,
-  PAGINAS_PROTEGIDAS,
-  protegerPaginas
-} = require('./src/middleware/seguridadMiddleware');
-
-const {
-  errorCSRF,
-  errorSolicitud,
-  rutaNoEncontrada,
-  errorInterno
-} = require('./src/middleware/erroresMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Detrás del proxy del hosting (HTTPS) hace falta confiar en él para que
+// la cookie Secure funcione y la auditoría guarde la IP real del cliente.
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
 
 // =====================================
 // CONFIGURACIÓN DE SEGURIDAD
@@ -43,7 +34,23 @@ app.use(express.urlencoded({ extended: false, limit: '10kb' }));
 // =====================================
 // SESIONES ALMACENADAS EN POSTGRESQL
 // =====================================
-app.use(middlewareSesion);
+app.use(session({
+  store: new pgSession({
+    pool: pool,
+    tableName: 'session',
+    createTableIfMissing: true
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  rolling: true,
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 60 * 1000
+  }
+}));
 
 // =====================================
 // PÁGINAS PROTEGIDAS Y ARCHIVOS ESTÁTICOS
@@ -57,7 +64,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', sinCache);
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuariosRoutes);
-app.use('/api/roles', rolesRoutes);
 
 // =====================================
 // COMPROBAR ESTADO DEL SERVIDOR
