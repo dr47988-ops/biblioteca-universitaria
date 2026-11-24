@@ -107,7 +107,14 @@ describe('Sesión y cookies (UTN-07c)', () => {
 
     expect(cookie).toMatch(/HttpOnly/i);
     expect(cookie).toMatch(/SameSite=Strict/i);
-    expect(cookie).toMatch(/Max-Age=60/);
+    const expiracion = cookie.match(/Expires=([^;]+)/i);
+expect(expiracion).not.toBeNull();
+
+const segundosRestantes =
+  (new Date(expiracion[1]).getTime() - Date.now()) / 1000;
+
+expect(segundosRestantes).toBeGreaterThanOrEqual(55);
+expect(segundosRestantes).toBeLessThanOrEqual(61);
     expect(decodeURIComponent(cookie)).not.toContain(ADMIN.correo);
   });
 

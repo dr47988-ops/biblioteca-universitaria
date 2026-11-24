@@ -1,212 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Pruebas de seguridad - Biblioteca Universitaria" tests="89" failures="0" errors="0" time="123.422">
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2026-11-24T03:48:51" time="67.358" tests="1">
-    <testcase classname=" TC-24 la sesión se cierra tras 61 segundos sin actividad" name=" TC-24 la sesión se cierra tras 61 segundos sin actividad" time="63.728">
+<testsuites name="Pruebas de seguridad - Biblioteca Universitaria" tests="89" failures="0" errors="0" time="212.518">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2026-11-24T04:32:41" time="67.096" tests="1">
+    <testcase classname=" TC-24 la sesión se cierra tras 61 segundos sin actividad" name=" TC-24 la sesión se cierra tras 61 segundos sin actividad" time="64.022">
     </testcase>
   </testsuite>
-  <testsuite name="Estado del servidor" errors="0" failures="0" skipped="0" timestamp="2026-11-24T03:49:58" time="28.966" tests="28">
-    <testcase classname="Estado del servidor TC-00 GET /api/estado responde 200" name="Estado del servidor TC-00 GET /api/estado responde 200" time="0.012">
+  <testsuite name="Estado del servidor" errors="0" failures="0" skipped="0" timestamp="2026-11-24T04:33:48" time="27.174" tests="28">
+    <testcase classname="Estado del servidor TC-00 GET /api/estado responde 200" name="Estado del servidor TC-00 GET /api/estado responde 200" time="0.008">
     </testcase>
-    <testcase classname="SQL Injection (UTN-07a) TC-01 login con &apos; OR &apos;1&apos;=&apos;1 no da acceso" name="SQL Injection (UTN-07a) TC-01 login con &apos; OR &apos;1&apos;=&apos;1 no da acceso" time="0.214">
+    <testcase classname="SQL Injection (UTN-07a) TC-01 login con &apos; OR &apos;1&apos;=&apos;1 no da acceso" name="SQL Injection (UTN-07a) TC-01 login con &apos; OR &apos;1&apos;=&apos;1 no da acceso" time="0.184">
     </testcase>
-    <testcase classname="SQL Injection (UTN-07a) TC-02 login con comentario SQL y DROP TABLE no altera la base" name="SQL Injection (UTN-07a) TC-02 login con comentario SQL y DROP TABLE no altera la base" time="0.393">
+    <testcase classname="SQL Injection (UTN-07a) TC-02 login con comentario SQL y DROP TABLE no altera la base" name="SQL Injection (UTN-07a) TC-02 login con comentario SQL y DROP TABLE no altera la base" time="0.36">
     </testcase>
-    <testcase classname="SQL Injection (UTN-07a) TC-03 login con objetos o arreglos en lugar de texto se rechaza" name="SQL Injection (UTN-07a) TC-03 login con objetos o arreglos en lugar de texto se rechaza" time="0.316">
+    <testcase classname="SQL Injection (UTN-07a) TC-03 login con objetos o arreglos en lugar de texto se rechaza" name="SQL Injection (UTN-07a) TC-03 login con objetos o arreglos en lugar de texto se rechaza" time="0.286">
     </testcase>
-    <testcase classname="SQL Injection (UTN-07a) TC-04 ID con SQL en la URL se rechaza antes de llegar a la base" name="SQL Injection (UTN-07a) TC-04 ID con SQL en la URL se rechaza antes de llegar a la base" time="1.5">
+    <testcase classname="SQL Injection (UTN-07a) TC-04 ID con SQL en la URL se rechaza antes de llegar a la base" name="SQL Injection (UTN-07a) TC-04 ID con SQL en la URL se rechaza antes de llegar a la base" time="1.337">
     </testcase>
-    <testcase classname="XSS (UTN-07b) TC-05 XSS almacenado: el texto se guarda literal y sale como JSON, no como HTML" name="XSS (UTN-07b) TC-05 XSS almacenado: el texto se guarda literal y sale como JSON, no como HTML" time="2.387">
+    <testcase classname="XSS (UTN-07b) TC-05 XSS almacenado: el texto se guarda literal y sale como JSON, no como HTML" name="XSS (UTN-07b) TC-05 XSS almacenado: el texto se guarda literal y sale como JSON, no como HTML" time="2.084">
     </testcase>
-    <testcase classname="XSS (UTN-07b) TC-06 XSS reflejado: la entrada de la URL no vuelve en la respuesta" name="XSS (UTN-07b) TC-06 XSS reflejado: la entrada de la URL no vuelve en la respuesta" time="1.331">
+    <testcase classname="XSS (UTN-07b) TC-06 XSS reflejado: la entrada de la URL no vuelve en la respuesta" name="XSS (UTN-07b) TC-06 XSS reflejado: la entrada de la URL no vuelve en la respuesta" time="1.128">
     </testcase>
-    <testcase classname="XSS (UTN-07b) TC-07 el código del navegador no usa innerHTML con datos ni scripts en línea" name="XSS (UTN-07b) TC-07 el código del navegador no usa innerHTML con datos ni scripts en línea" time="0.016">
+    <testcase classname="XSS (UTN-07b) TC-07 el código del navegador no usa innerHTML con datos ni scripts en línea" name="XSS (UTN-07b) TC-07 el código del navegador no usa innerHTML con datos ni scripts en línea" time="0.014">
     </testcase>
-    <testcase classname="CSRF (UTN-07d) TC-08 registrar usuario sin token CSRF se rechaza y no crea nada" name="CSRF (UTN-07d) TC-08 registrar usuario sin token CSRF se rechaza y no crea nada" time="2.011">
+    <testcase classname="CSRF (UTN-07d) TC-08 registrar usuario sin token CSRF se rechaza y no crea nada" name="CSRF (UTN-07d) TC-08 registrar usuario sin token CSRF se rechaza y no crea nada" time="1.681">
     </testcase>
-    <testcase classname="CSRF (UTN-07d) TC-09 eliminar usuario con token falso se rechaza y el usuario sigue existiendo" name="CSRF (UTN-07d) TC-09 eliminar usuario con token falso se rechaza y el usuario sigue existiendo" time="1.515">
+    <testcase classname="CSRF (UTN-07d) TC-09 eliminar usuario con token falso se rechaza y el usuario sigue existiendo" name="CSRF (UTN-07d) TC-09 eliminar usuario con token falso se rechaza y el usuario sigue existiendo" time="1.288">
     </testcase>
-    <testcase classname="CSRF (UTN-07d) TC-10 con token válido la misma acción sí funciona" name="CSRF (UTN-07d) TC-10 con token válido la misma acción sí funciona" time="1.764">
+    <testcase classname="CSRF (UTN-07d) TC-10 con token válido la misma acción sí funciona" name="CSRF (UTN-07d) TC-10 con token válido la misma acción sí funciona" time="1.523">
     </testcase>
-    <testcase classname="CSRF (UTN-07d) TC-11 un token de otra sesión no sirve" name="CSRF (UTN-07d) TC-11 un token de otra sesión no sirve" time="2.496">
+    <testcase classname="CSRF (UTN-07d) TC-11 un token de otra sesión no sirve" name="CSRF (UTN-07d) TC-11 un token de otra sesión no sirve" time="2.097">
     </testcase>
-    <testcase classname="CSRF (UTN-07d) TC-12 cerrar sesión sin token CSRF se rechaza y la sesión sigue activa" name="CSRF (UTN-07d) TC-12 cerrar sesión sin token CSRF se rechaza y la sesión sigue activa" time="1.401">
+    <testcase classname="CSRF (UTN-07d) TC-12 cerrar sesión sin token CSRF se rechaza y la sesión sigue activa" name="CSRF (UTN-07d) TC-12 cerrar sesión sin token CSRF se rechaza y la sesión sigue activa" time="1.194">
     </testcase>
-    <testcase classname="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-13 sin sesión, ninguna ruta protegida responde datos" name="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-13 sin sesión, ninguna ruta protegida responde datos" time="0.065">
+    <testcase classname="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-13 sin sesión, ninguna ruta protegida responde datos" name="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-13 sin sesión, ninguna ruta protegida responde datos" time="0.048">
     </testcase>
-    <testcase classname="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-14 Auditor solo lee usuarios: editar, borrar y registrar dan 403" name="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-14 Auditor solo lee usuarios: editar, borrar y registrar dan 403" time="3.174">
+    <testcase classname="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-14 Auditor solo lee usuarios: editar, borrar y registrar dan 403" name="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-14 Auditor solo lee usuarios: editar, borrar y registrar dan 403" time="3.404">
     </testcase>
-    <testcase classname="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-14 Bibliotecario solo lee usuarios: editar, borrar y registrar dan 403" name="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-14 Bibliotecario solo lee usuarios: editar, borrar y registrar dan 403" time="2.523">
+    <testcase classname="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-14 Bibliotecario solo lee usuarios: editar, borrar y registrar dan 403" name="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-14 Bibliotecario solo lee usuarios: editar, borrar y registrar dan 403" time="3.125">
     </testcase>
-    <testcase classname="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-15 la respuesta 403 no expone datos sensibles ni trazas" name="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-15 la respuesta 403 no expone datos sensibles ni trazas" time="1.182">
+    <testcase classname="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-15 la respuesta 403 no expone datos sensibles ni trazas" name="Control de acceso y RBAC - HTTP 403 (UTN-05, UTN-06) TC-15 la respuesta 403 no expone datos sensibles ni trazas" time="1.156">
     </testcase>
-    <testcase classname="Sesión y cookies (UTN-07c) TC-16 la cookie de sesión es HttpOnly, SameSite, dura 60 s y no lleva datos del usuario" name="Sesión y cookies (UTN-07c) TC-16 la cookie de sesión es HttpOnly, SameSite, dura 60 s y no lleva datos del usuario" time="0.868">
+    <testcase classname="Sesión y cookies (UTN-07c) TC-16 la cookie de sesión es HttpOnly, SameSite, dura 60 s y no lleva datos del usuario" name="Sesión y cookies (UTN-07c) TC-16 la cookie de sesión es HttpOnly, SameSite, dura 60 s y no lleva datos del usuario" time="0.807">
     </testcase>
-    <testcase classname="Sesión y cookies (UTN-07c) TC-17 en producción con HTTPS la cookie incluye Secure" name="Sesión y cookies (UTN-07c) TC-17 en producción con HTTPS la cookie incluye Secure" time="1.061">
+    <testcase classname="Sesión y cookies (UTN-07c) TC-17 en producción con HTTPS la cookie incluye Secure" name="Sesión y cookies (UTN-07c) TC-17 en producción con HTTPS la cookie incluye Secure" time="1.006">
     </testcase>
-    <testcase classname="Sesión y cookies (UTN-07c) TC-18 cerrar sesión invalida la cookie en el servidor" name="Sesión y cookies (UTN-07c) TC-18 cerrar sesión invalida la cookie en el servidor" time="1.4">
+    <testcase classname="Sesión y cookies (UTN-07c) TC-18 cerrar sesión invalida la cookie en el servidor" name="Sesión y cookies (UTN-07c) TC-18 cerrar sesión invalida la cookie en el servidor" time="1.41">
     </testcase>
-    <testcase classname="Encabezados HTTP (UTN-08) TC-19 /api/estado incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP (UTN-08) TC-19 /api/estado incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.008">
+    <testcase classname="Encabezados HTTP (UTN-08) TC-19 /api/estado incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP (UTN-08) TC-19 /api/estado incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.006">
     </testcase>
-    <testcase classname="Encabezados HTTP (UTN-08) TC-19 / incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP (UTN-08) TC-19 / incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.015">
+    <testcase classname="Encabezados HTTP (UTN-08) TC-19 / incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP (UTN-08) TC-19 / incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.011">
     </testcase>
-    <testcase classname="Encabezados HTTP (UTN-08) TC-19 /admin.html incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP (UTN-08) TC-19 /admin.html incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.01">
+    <testcase classname="Encabezados HTTP (UTN-08) TC-19 /admin.html incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP (UTN-08) TC-19 /admin.html incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.005">
     </testcase>
-    <testcase classname="Encabezados HTTP (UTN-08) TC-19 /ruta-que-no-existe incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP (UTN-08) TC-19 /ruta-que-no-existe incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.008">
+    <testcase classname="Encabezados HTTP (UTN-08) TC-19 /ruta-que-no-existe incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP (UTN-08) TC-19 /ruta-que-no-existe incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.007">
     </testcase>
-    <testcase classname="Encabezados HTTP (UTN-08) TC-20 la CSP no permite scripts en línea ni eval" name="Encabezados HTTP (UTN-08) TC-20 la CSP no permite scripts en línea ni eval" time="0.012">
+    <testcase classname="Encabezados HTTP (UTN-08) TC-20 la CSP no permite scripts en línea ni eval" name="Encabezados HTTP (UTN-08) TC-20 la CSP no permite scripts en línea ni eval" time="0.005">
     </testcase>
-    <testcase classname="Autenticación (credenciales) TC-21 contraseña incorrecta devuelve 401 con mensaje genérico" name="Autenticación (credenciales) TC-21 contraseña incorrecta devuelve 401 con mensaje genérico" time="0.499">
+    <testcase classname="Autenticación (credenciales) TC-21 contraseña incorrecta devuelve 401 con mensaje genérico" name="Autenticación (credenciales) TC-21 contraseña incorrecta devuelve 401 con mensaje genérico" time="0.425">
     </testcase>
-    <testcase classname="Autenticación (credenciales) TC-22 correo inexistente da el mismo mensaje que contraseña incorrecta" name="Autenticación (credenciales) TC-22 correo inexistente da el mismo mensaje que contraseña incorrecta" time="0.196">
+    <testcase classname="Autenticación (credenciales) TC-22 correo inexistente da el mismo mensaje que contraseña incorrecta" name="Autenticación (credenciales) TC-22 correo inexistente da el mismo mensaje que contraseña incorrecta" time="0.206">
     </testcase>
-    <testcase classname="Autenticación (credenciales) TC-23 las contraseñas se guardan con bcrypt de costo 12 o más" name="Autenticación (credenciales) TC-23 las contraseñas se guardan con bcrypt de costo 12 o más" time="0.094">
-    </testcase>
-  </testsuite>
-  <testsuite name="Inicios de sesión" errors="0" failures="0" skipped="0" timestamp="2026-11-24T03:50:27" time="23.976" tests="15">
-    <testcase classname="Inicios de sesión TC-25 un inicio de sesión fallido queda registrado con fecha, hora e IP" name="Inicios de sesión TC-25 un inicio de sesión fallido queda registrado con fecha, hora e IP" time="0.679">
-    </testcase>
-    <testcase classname="Inicios de sesión TC-26 un intento con un correo que no existe también se registra" name="Inicios de sesión TC-26 un intento con un correo que no existe también se registra" time="0.368">
-    </testcase>
-    <testcase classname="Inicios de sesión TC-27 un inicio de sesión exitoso queda registrado con el usuario y la IP" name="Inicios de sesión TC-27 un inicio de sesión exitoso queda registrado con el usuario y la IP" time="1.198">
-    </testcase>
-    <testcase classname="Inicios de sesión TC-28 la contraseña escrita nunca se guarda en la auditoría" name="Inicios de sesión TC-28 la contraseña escrita nunca se guarda en la auditoría" time="0.772">
-    </testcase>
-    <testcase classname="Inicios de sesión TC-29 un correo con SQL (&apos;); DROP TABLE...) se guarda como texto y no se ejecuta" name="Inicios de sesión TC-29 un correo con SQL (&apos;); DROP TABLE...) se guarda como texto y no se ejecuta" time="0.464">
-    </testcase>
-    <testcase classname="Accesos denegados 403 TC-30 un 403 sin sesión registra la ruta, el método y que fue anónimo" name="Accesos denegados 403 TC-30 un 403 sin sesión registra la ruta, el método y que fue anónimo" time="0.871">
-    </testcase>
-    <testcase classname="Accesos denegados 403 TC-31 un 403 con usuario registra quién fue y la ruta que intentó" name="Accesos denegados 403 TC-31 un 403 con usuario registra quién fue y la ruta que intentó" time="1.506">
-    </testcase>
-    <testcase classname="Accesos denegados 403 TC-32 un 403 por token CSRF inválido también queda registrado" name="Accesos denegados 403 TC-32 un 403 por token CSRF inválido también queda registrado" time="1.325">
-    </testcase>
-    <testcase classname="Cambios de rol y permisos TC-33 cambiar el rol de un usuario registra quién lo hizo y el rol anterior y nuevo" name="Cambios de rol y permisos TC-33 cambiar el rol de un usuario registra quién lo hizo y el rol anterior y nuevo" time="2.323">
-    </testcase>
-    <testcase classname="Cambios de rol y permisos TC-34 editar un usuario sin cambiar su rol no genera un cambio de rol" name="Cambios de rol y permisos TC-34 editar un usuario sin cambiar su rol no genera un cambio de rol" time="2.542">
-    </testcase>
-    <testcase classname="Cambios de rol y permisos TC-35 el cambio de permisos de un rol se registra con los permisos antes y después" name="Cambios de rol y permisos TC-35 el cambio de permisos de un rol se registra con los permisos antes y después" time="0.297">
-    </testcase>
-    <testcase classname="Consulta de la auditoría (solo SuperAdmin) TC-36 el SuperAdmin consulta los registros, del más reciente al más antiguo" name="Consulta de la auditoría (solo SuperAdmin) TC-36 el SuperAdmin consulta los registros, del más reciente al más antiguo" time="1.459">
-    </testcase>
-    <testcase classname="Consulta de la auditoría (solo SuperAdmin) TC-37 el filtro por tipo solo devuelve ese tipo" name="Consulta de la auditoría (solo SuperAdmin) TC-37 el filtro por tipo solo devuelve ese tipo" time="1.439">
-    </testcase>
-    <testcase classname="Consulta de la auditoría (solo SuperAdmin) TC-38 los filtros inválidos o con SQL se rechazan con 400" name="Consulta de la auditoría (solo SuperAdmin) TC-38 los filtros inválidos o con SQL se rechazan con 400" time="3.18">
-    </testcase>
-    <testcase classname="Consulta de la auditoría (solo SuperAdmin) TC-39 el Auditor, el Bibliotecario y quien no inició sesión reciben 403" name="Consulta de la auditoría (solo SuperAdmin) TC-39 el Auditor, el Bibliotecario y quien no inició sesión reciben 403" time="3.094">
+    <testcase classname="Autenticación (credenciales) TC-23 las contraseñas se guardan con bcrypt de costo 12 o más" name="Autenticación (credenciales) TC-23 las contraseñas se guardan con bcrypt de costo 12 o más" time="0.103">
     </testcase>
   </testsuite>
-  <testsuite name="Biblioteca sin sesión" errors="0" failures="0" skipped="10" timestamp="2026-11-24T03:50:51" time="1.182" tests="22">
-    <testcase classname="Biblioteca sin sesión get /api/biblioteca/permisos responde 403" name="Biblioteca sin sesión get /api/biblioteca/permisos responde 403" time="0.016">
+  <testsuite name="Inicios de sesión" errors="0" failures="0" skipped="0" timestamp="2026-11-24T04:34:15" time="22.141" tests="15">
+    <testcase classname="Inicios de sesión TC-25 un inicio de sesión fallido queda registrado con fecha, hora e IP" name="Inicios de sesión TC-25 un inicio de sesión fallido queda registrado con fecha, hora e IP" time="0.633">
     </testcase>
-    <testcase classname="Biblioteca sin sesión get /api/biblioteca/libros responde 403" name="Biblioteca sin sesión get /api/biblioteca/libros responde 403" time="0.01">
+    <testcase classname="Inicios de sesión TC-26 un intento con un correo que no existe también se registra" name="Inicios de sesión TC-26 un intento con un correo que no existe también se registra" time="0.408">
     </testcase>
-    <testcase classname="Biblioteca sin sesión post /api/biblioteca/libros responde 403" name="Biblioteca sin sesión post /api/biblioteca/libros responde 403" time="0.01">
+    <testcase classname="Inicios de sesión TC-27 un inicio de sesión exitoso queda registrado con el usuario y la IP" name="Inicios de sesión TC-27 un inicio de sesión exitoso queda registrado con el usuario y la IP" time="1.221">
     </testcase>
-    <testcase classname="Biblioteca sin sesión put /api/biblioteca/libros/1 responde 403" name="Biblioteca sin sesión put /api/biblioteca/libros/1 responde 403" time="0.011">
+    <testcase classname="Inicios de sesión TC-28 la contraseña escrita nunca se guarda en la auditoría" name="Inicios de sesión TC-28 la contraseña escrita nunca se guarda en la auditoría" time="0.727">
     </testcase>
-    <testcase classname="Biblioteca sin sesión delete /api/biblioteca/libros/1 responde 403" name="Biblioteca sin sesión delete /api/biblioteca/libros/1 responde 403" time="0.013">
+    <testcase classname="Inicios de sesión TC-29 un correo con SQL (&apos;); DROP TABLE...) se guarda como texto y no se ejecuta" name="Inicios de sesión TC-29 un correo con SQL (&apos;); DROP TABLE...) se guarda como texto y no se ejecuta" time="0.505">
     </testcase>
-    <testcase classname="Biblioteca sin sesión get /api/biblioteca/socios responde 403" name="Biblioteca sin sesión get /api/biblioteca/socios responde 403" time="0.014">
+    <testcase classname="Accesos denegados 403 TC-30 un 403 sin sesión registra la ruta, el método y que fue anónimo" name="Accesos denegados 403 TC-30 un 403 sin sesión registra la ruta, el método y que fue anónimo" time="0.827">
     </testcase>
-    <testcase classname="Biblioteca sin sesión post /api/biblioteca/socios responde 403" name="Biblioteca sin sesión post /api/biblioteca/socios responde 403" time="0.013">
+    <testcase classname="Accesos denegados 403 TC-31 un 403 con usuario registra quién fue y la ruta que intentó" name="Accesos denegados 403 TC-31 un 403 con usuario registra quién fue y la ruta que intentó" time="1.483">
     </testcase>
-    <testcase classname="Biblioteca sin sesión get /api/biblioteca/prestamos responde 403" name="Biblioteca sin sesión get /api/biblioteca/prestamos responde 403" time="0.014">
+    <testcase classname="Accesos denegados 403 TC-32 un 403 por token CSRF inválido también queda registrado" name="Accesos denegados 403 TC-32 un 403 por token CSRF inválido también queda registrado" time="1.362">
     </testcase>
-    <testcase classname="Biblioteca sin sesión post /api/biblioteca/prestamos responde 403" name="Biblioteca sin sesión post /api/biblioteca/prestamos responde 403" time="0.014">
+    <testcase classname="Cambios de rol y permisos TC-33 cambiar el rol de un usuario registra quién lo hizo y el rol anterior y nuevo" name="Cambios de rol y permisos TC-33 cambiar el rol de un usuario registra quién lo hizo y el rol anterior y nuevo" time="2.12">
     </testcase>
-    <testcase classname="Biblioteca sin sesión get /api/biblioteca/prestamos/vencidos responde 403" name="Biblioteca sin sesión get /api/biblioteca/prestamos/vencidos responde 403" time="0.014">
+    <testcase classname="Cambios de rol y permisos TC-34 editar un usuario sin cambiar su rol no genera un cambio de rol" name="Cambios de rol y permisos TC-34 editar un usuario sin cambiar su rol no genera un cambio de rol" time="2.324">
     </testcase>
-    <testcase classname="Biblioteca sin sesión post /api/biblioteca/prestamos/1/devolucion responde 403" name="Biblioteca sin sesión post /api/biblioteca/prestamos/1/devolucion responde 403" time="0.013">
+    <testcase classname="Cambios de rol y permisos TC-35 el cambio de permisos de un rol se registra con los permisos antes y después" name="Cambios de rol y permisos TC-35 el cambio de permisos de un rol se registra con los permisos antes y después" time="0.283">
     </testcase>
-    <testcase classname="Biblioteca sin sesión la página de biblioteca redirige al login" name="Biblioteca sin sesión la página de biblioteca redirige al login" time="0.012">
+    <testcase classname="Consulta de la auditoría (solo SuperAdmin) TC-36 el SuperAdmin consulta los registros, del más reciente al más antiguo" name="Consulta de la auditoría (solo SuperAdmin) TC-36 el SuperAdmin consulta los registros, del más reciente al más antiguo" time="1.357">
     </testcase>
-    <testcase classname="Auditor: solo lectura del catálogo puede consultar el catálogo" name="Auditor: solo lectura del catálogo puede consultar el catálogo" time="0">
-      <skipped/>
+    <testcase classname="Consulta de la auditoría (solo SuperAdmin) TC-37 el filtro por tipo solo devuelve ese tipo" name="Consulta de la auditoría (solo SuperAdmin) TC-37 el filtro por tipo solo devuelve ese tipo" time="1.269">
     </testcase>
-    <testcase classname="Auditor: solo lectura del catálogo no accede a los datos de socios (dato sensible)" name="Auditor: solo lectura del catálogo no accede a los datos de socios (dato sensible)" time="0">
-      <skipped/>
+    <testcase classname="Consulta de la auditoría (solo SuperAdmin) TC-38 los filtros inválidos o con SQL se rechazan con 400" name="Consulta de la auditoría (solo SuperAdmin) TC-38 los filtros inválidos o con SQL se rechazan con 400" time="2.527">
     </testcase>
-    <testcase classname="Auditor: solo lectura del catálogo no accede a los préstamos activos (historial)" name="Auditor: solo lectura del catálogo no accede a los préstamos activos (historial)" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Auditor: solo lectura del catálogo no puede crear libros aunque envíe token CSRF" name="Auditor: solo lectura del catálogo no puede crear libros aunque envíe token CSRF" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Auditor: solo lectura del catálogo el reporte de vencidos no expone correos de socios" name="Auditor: solo lectura del catálogo el reporte de vencidos no expone correos de socios" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Bibliotecario: CRUD con datos mínimos la lista de socios no incluye correos" name="Bibliotecario: CRUD con datos mínimos la lista de socios no incluye correos" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Bibliotecario: CRUD con datos mínimos tiene permiso borrar (404 si el libro no existe)" name="Bibliotecario: CRUD con datos mínimos tiene permiso borrar (404 si el libro no existe)" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Bibliotecario: CRUD con datos mínimos crear libro sin token CSRF es rechazado" name="Bibliotecario: CRUD con datos mínimos crear libro sin token CSRF es rechazado" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Bibliotecario: CRUD con datos mínimos TC-02: búsqueda con UNION SELECT no expone datos" name="Bibliotecario: CRUD con datos mínimos TC-02: búsqueda con UNION SELECT no expone datos" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="Bibliotecario: CRUD con datos mínimos TC-03: script en la búsqueda se devuelve como JSON, no HTML" name="Bibliotecario: CRUD con datos mínimos TC-03: script en la búsqueda se devuelve como JSON, no HTML" time="0">
-      <skipped/>
+    <testcase classname="Consulta de la auditoría (solo SuperAdmin) TC-39 el Auditor, el Bibliotecario y quien no inició sesión reciben 403" name="Consulta de la auditoría (solo SuperAdmin) TC-39 el Auditor, el Bibliotecario y quien no inició sesión reciben 403" time="2.741">
     </testcase>
   </testsuite>
-  <testsuite name="Encabezados HTTP de seguridad (UTN-08)" errors="0" failures="0" skipped="11" timestamp="2026-11-24T03:50:52" time="1.28" tests="23">
-    <testcase classname="Encabezados HTTP de seguridad (UTN-08) incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP de seguridad (UTN-08) incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.02">
+  <testsuite name="Biblioteca sin sesión" errors="0" failures="0" skipped="0" timestamp="2026-11-24T04:34:37" time="13.504" tests="22">
+    <testcase classname="Biblioteca sin sesión get /api/biblioteca/permisos responde 403" name="Biblioteca sin sesión get /api/biblioteca/permisos responde 403" time="0.012">
     </testcase>
-    <testcase classname="Encabezados HTTP de seguridad (UTN-08) las respuestas de la API no se guardan en caché" name="Encabezados HTTP de seguridad (UTN-08) las respuestas de la API no se guardan en caché" time="0.023">
+    <testcase classname="Biblioteca sin sesión get /api/biblioteca/libros responde 403" name="Biblioteca sin sesión get /api/biblioteca/libros responde 403" time="0.011">
     </testcase>
-    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/roles responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/roles responde 403 sin exponer datos" time="0.008">
+    <testcase classname="Biblioteca sin sesión post /api/biblioteca/libros responde 403" name="Biblioteca sin sesión post /api/biblioteca/libros responde 403" time="0.007">
     </testcase>
-    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/roles/permisos responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/roles/permisos responde 403 sin exponer datos" time="0.01">
+    <testcase classname="Biblioteca sin sesión put /api/biblioteca/libros/1 responde 403" name="Biblioteca sin sesión put /api/biblioteca/libros/1 responde 403" time="0.009">
     </testcase>
-    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) post /api/roles responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) post /api/roles responde 403 sin exponer datos" time="0.009">
+    <testcase classname="Biblioteca sin sesión delete /api/biblioteca/libros/1 responde 403" name="Biblioteca sin sesión delete /api/biblioteca/libros/1 responde 403" time="0.009">
     </testcase>
-    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) put /api/roles/1 responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) put /api/roles/1 responde 403 sin exponer datos" time="0.009">
+    <testcase classname="Biblioteca sin sesión get /api/biblioteca/socios responde 403" name="Biblioteca sin sesión get /api/biblioteca/socios responde 403" time="0.007">
     </testcase>
-    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) delete /api/roles/1 responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) delete /api/roles/1 responde 403 sin exponer datos" time="0.014">
+    <testcase classname="Biblioteca sin sesión post /api/biblioteca/socios responde 403" name="Biblioteca sin sesión post /api/biblioteca/socios responde 403" time="0.007">
     </testcase>
-    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) post /api/auth/registro responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) post /api/auth/registro responde 403 sin exponer datos" time="0.015">
+    <testcase classname="Biblioteca sin sesión get /api/biblioteca/prestamos responde 403" name="Biblioteca sin sesión get /api/biblioteca/prestamos responde 403" time="0.009">
     </testcase>
-    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/auth/mi-sesion responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/auth/mi-sesion responde 403 sin exponer datos" time="0.019">
+    <testcase classname="Biblioteca sin sesión post /api/biblioteca/prestamos responde 403" name="Biblioteca sin sesión post /api/biblioteca/prestamos responde 403" time="0.01">
     </testcase>
-    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) el panel administrativo redirige al login sin sesión" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) el panel administrativo redirige al login sin sesión" time="0.011">
+    <testcase classname="Biblioteca sin sesión get /api/biblioteca/prestamos/vencidos responde 403" name="Biblioteca sin sesión get /api/biblioteca/prestamos/vencidos responde 403" time="0.007">
     </testcase>
-    <testcase classname="Errores controlados JSON malformado responde 400 sin trazas" name="Errores controlados JSON malformado responde 400 sin trazas" time="0.033">
+    <testcase classname="Biblioteca sin sesión post /api/biblioteca/prestamos/1/devolucion responde 403" name="Biblioteca sin sesión post /api/biblioteca/prestamos/1/devolucion responde 403" time="0.009">
     </testcase>
-    <testcase classname="Errores controlados ruta inexistente responde 404 genérico" name="Errores controlados ruta inexistente responde 404 genérico" time="0.011">
+    <testcase classname="Biblioteca sin sesión la página de biblioteca redirige al login" name="Biblioteca sin sesión la página de biblioteca redirige al login" time="0.008">
     </testcase>
-    <testcase classname="Sesión y cookies (UTN-07c) la cookie de sesión es HttpOnly, SameSite y sin datos del usuario" name="Sesión y cookies (UTN-07c) la cookie de sesión es HttpOnly, SameSite y sin datos del usuario" time="0">
-      <skipped/>
+    <testcase classname="Auditor: solo lectura del catálogo puede consultar el catálogo" name="Auditor: solo lectura del catálogo puede consultar el catálogo" time="1.923">
     </testcase>
-    <testcase classname="Sesión y cookies (UTN-07c) la sesión se invalida en el servidor tras 60 s de inactividad" name="Sesión y cookies (UTN-07c) la sesión se invalida en el servidor tras 60 s de inactividad" time="0">
-      <skipped/>
+    <testcase classname="Auditor: solo lectura del catálogo no accede a los datos de socios (dato sensible)" name="Auditor: solo lectura del catálogo no accede a los datos de socios (dato sensible)" time="1.147">
     </testcase>
-    <testcase classname="CSRF (UTN-07d) crear rol sin token CSRF es rechazado" name="CSRF (UTN-07d) crear rol sin token CSRF es rechazado" time="0">
-      <skipped/>
+    <testcase classname="Auditor: solo lectura del catálogo no accede a los préstamos activos (historial)" name="Auditor: solo lectura del catálogo no accede a los préstamos activos (historial)" time="1.156">
     </testcase>
-    <testcase classname="CSRF (UTN-07d) token CSRF falso es rechazado" name="CSRF (UTN-07d) token CSRF falso es rechazado" time="0">
-      <skipped/>
+    <testcase classname="Auditor: solo lectura del catálogo no puede crear libros aunque envíe token CSRF" name="Auditor: solo lectura del catálogo no puede crear libros aunque envíe token CSRF" time="1.343">
     </testcase>
-    <testcase classname="Permisos por rol (UTN-05, UTN-06) TC-06: Auditor no puede consultar roles" name="Permisos por rol (UTN-05, UTN-06) TC-06: Auditor no puede consultar roles" time="0">
-      <skipped/>
+    <testcase classname="Auditor: solo lectura del catálogo el reporte de vencidos no expone correos de socios" name="Auditor: solo lectura del catálogo el reporte de vencidos no expone correos de socios" time="1.236">
     </testcase>
-    <testcase classname="Permisos por rol (UTN-05, UTN-06) Auditor puede leer usuarios" name="Permisos por rol (UTN-05, UTN-06) Auditor puede leer usuarios" time="0">
-      <skipped/>
+    <testcase classname="Bibliotecario: CRUD con datos mínimos la lista de socios no incluye correos" name="Bibliotecario: CRUD con datos mínimos la lista de socios no incluye correos" time="1.244">
     </testcase>
-    <testcase classname="Permisos por rol (UTN-05, UTN-06) TC-07: Bibliotecario no puede borrar usuarios por API" name="Permisos por rol (UTN-05, UTN-06) TC-07: Bibliotecario no puede borrar usuarios por API" time="0">
-      <skipped/>
+    <testcase classname="Bibliotecario: CRUD con datos mínimos tiene permiso borrar (404 si el libro no existe)" name="Bibliotecario: CRUD con datos mínimos tiene permiso borrar (404 si el libro no existe)" time="1.458">
     </testcase>
-    <testcase classname="Permisos por rol (UTN-05, UTN-06) Bibliotecario no puede crear roles aunque envíe token" name="Permisos por rol (UTN-05, UTN-06) Bibliotecario no puede crear roles aunque envíe token" time="0">
-      <skipped/>
+    <testcase classname="Bibliotecario: CRUD con datos mínimos crear libro sin token CSRF es rechazado" name="Bibliotecario: CRUD con datos mínimos crear libro sin token CSRF es rechazado" time="1.155">
     </testcase>
-    <testcase classname="Permisos por rol (UTN-05, UTN-06) SuperAdmin crea, edita y elimina un rol" name="Permisos por rol (UTN-05, UTN-06) SuperAdmin crea, edita y elimina un rol" time="0">
-      <skipped/>
+    <testcase classname="Bibliotecario: CRUD con datos mínimos TC-02: búsqueda con UNION SELECT no expone datos" name="Bibliotecario: CRUD con datos mínimos TC-02: búsqueda con UNION SELECT no expone datos" time="1.232">
     </testcase>
-    <testcase classname="Permisos por rol (UTN-05, UTN-06) XSS almacenado: nombre de rol con etiquetas es rechazado" name="Permisos por rol (UTN-05, UTN-06) XSS almacenado: nombre de rol con etiquetas es rechazado" time="0">
-      <skipped/>
+    <testcase classname="Bibliotecario: CRUD con datos mínimos TC-03: script en la búsqueda se devuelve como JSON, no HTML" name="Bibliotecario: CRUD con datos mínimos TC-03: script en la búsqueda se devuelve como JSON, no HTML" time="1.248">
     </testcase>
-    <testcase classname="Permisos por rol (UTN-05, UTN-06) los roles base no se pueden eliminar" name="Permisos por rol (UTN-05, UTN-06) los roles base no se pueden eliminar" time="0">
-      <skipped/>
+  </testsuite>
+  <testsuite name="Encabezados HTTP de seguridad (UTN-08)" errors="0" failures="0" skipped="0" timestamp="2026-11-24T04:34:51" time="81.731" tests="23">
+    <testcase classname="Encabezados HTTP de seguridad (UTN-08) incluye CSP, X-Frame-Options, nosniff y HSTS" name="Encabezados HTTP de seguridad (UTN-08) incluye CSP, X-Frame-Options, nosniff y HSTS" time="0.01">
+    </testcase>
+    <testcase classname="Encabezados HTTP de seguridad (UTN-08) las respuestas de la API no se guardan en caché" name="Encabezados HTTP de seguridad (UTN-08) las respuestas de la API no se guardan en caché" time="0.006">
+    </testcase>
+    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/roles responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/roles responde 403 sin exponer datos" time="0.006">
+    </testcase>
+    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/roles/permisos responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/roles/permisos responde 403 sin exponer datos" time="0.008">
+    </testcase>
+    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) post /api/roles responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) post /api/roles responde 403 sin exponer datos" time="0.005">
+    </testcase>
+    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) put /api/roles/1 responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) put /api/roles/1 responde 403 sin exponer datos" time="0.007">
+    </testcase>
+    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) delete /api/roles/1 responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) delete /api/roles/1 responde 403 sin exponer datos" time="0.004">
+    </testcase>
+    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) post /api/auth/registro responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) post /api/auth/registro responde 403 sin exponer datos" time="0.005">
+    </testcase>
+    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/auth/mi-sesion responde 403 sin exponer datos" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) get /api/auth/mi-sesion responde 403 sin exponer datos" time="0.006">
+    </testcase>
+    <testcase classname="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) el panel administrativo redirige al login sin sesión" name="Control de acceso sin sesión (UTN-05, UTN-06, UTN-07c) el panel administrativo redirige al login sin sesión" time="0.006">
+    </testcase>
+    <testcase classname="Errores controlados JSON malformado responde 400 sin trazas" name="Errores controlados JSON malformado responde 400 sin trazas" time="0.021">
+    </testcase>
+    <testcase classname="Errores controlados ruta inexistente responde 404 genérico" name="Errores controlados ruta inexistente responde 404 genérico" time="0.009">
+    </testcase>
+    <testcase classname="Sesión y cookies (UTN-07c) la cookie de sesión es HttpOnly, SameSite y sin datos del usuario" name="Sesión y cookies (UTN-07c) la cookie de sesión es HttpOnly, SameSite y sin datos del usuario" time="1.517">
+    </testcase>
+    <testcase classname="Sesión y cookies (UTN-07c) la sesión se invalida en el servidor tras 60 s de inactividad" name="Sesión y cookies (UTN-07c) la sesión se invalida en el servidor tras 60 s de inactividad" time="62.551">
+    </testcase>
+    <testcase classname="CSRF (UTN-07d) crear rol sin token CSRF es rechazado" name="CSRF (UTN-07d) crear rol sin token CSRF es rechazado" time="1.933">
+    </testcase>
+    <testcase classname="CSRF (UTN-07d) token CSRF falso es rechazado" name="CSRF (UTN-07d) token CSRF falso es rechazado" time="1.327">
+    </testcase>
+    <testcase classname="Permisos por rol (UTN-05, UTN-06) TC-06: Auditor no puede consultar roles" name="Permisos por rol (UTN-05, UTN-06) TC-06: Auditor no puede consultar roles" time="1.31">
+    </testcase>
+    <testcase classname="Permisos por rol (UTN-05, UTN-06) Auditor puede leer usuarios" name="Permisos por rol (UTN-05, UTN-06) Auditor puede leer usuarios" time="1.401">
+    </testcase>
+    <testcase classname="Permisos por rol (UTN-05, UTN-06) TC-07: Bibliotecario no puede borrar usuarios por API" name="Permisos por rol (UTN-05, UTN-06) TC-07: Bibliotecario no puede borrar usuarios por API" time="1.561">
+    </testcase>
+    <testcase classname="Permisos por rol (UTN-05, UTN-06) Bibliotecario no puede crear roles aunque envíe token" name="Permisos por rol (UTN-05, UTN-06) Bibliotecario no puede crear roles aunque envíe token" time="1.514">
+    </testcase>
+    <testcase classname="Permisos por rol (UTN-05, UTN-06) SuperAdmin crea, edita y elimina un rol" name="Permisos por rol (UTN-05, UTN-06) SuperAdmin crea, edita y elimina un rol" time="4.889">
+    </testcase>
+    <testcase classname="Permisos por rol (UTN-05, UTN-06) XSS almacenado: nombre de rol con etiquetas es rechazado" name="Permisos por rol (UTN-05, UTN-06) XSS almacenado: nombre de rol con etiquetas es rechazado" time="1.339">
+    </testcase>
+    <testcase classname="Permisos por rol (UTN-05, UTN-06) los roles base no se pueden eliminar" name="Permisos por rol (UTN-05, UTN-06) los roles base no se pueden eliminar" time="2.049">
     </testcase>
   </testsuite>
 </testsuites>
