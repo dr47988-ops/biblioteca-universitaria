@@ -31,8 +31,9 @@ const listarAuditoria = async (req, res) => {
       !Number.isInteger(limite) ||
       limite < 1 ||
       limite > LIMITE_MAXIMO ||
-      !Number.isInteger(pagina) ||
-      pagina < 1
+      !Number.isSafeInteger(pagina) ||
+      pagina < 1 ||
+      pagina > 10000
     ) {
       return res.status(400).json({
         mensaje: 'Parámetros de paginación no válidos'

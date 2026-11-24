@@ -57,7 +57,7 @@ const actualizarUsuario = async (req, res) => {
       rol_id
     } = req.body;
 
-    if (!Number.isSafeInteger(id) || id <= 0) {
+    if (!Number.isSafeInteger(id) || id <= 0 || id > 2147483647) {
       return res.status(400).json({
         mensaje: 'ID de usuario inválido'
       });
@@ -175,7 +175,7 @@ const eliminarUsuario = async (req, res) => {
     const id = Number(req.params.id);
 
     // Validar ID
-    if (!Number.isSafeInteger(id) || id <= 0) {
+   if (!Number.isSafeInteger(id) || id <= 0 || id > 2147483647) {
       return res.status(400).json({
         mensaje: 'ID de usuario inválido'
       });

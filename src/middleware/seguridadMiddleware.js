@@ -6,7 +6,7 @@ const CDN = 'https://cdn.jsdelivr.net';
 // =====================================
 // ENCABEZADOS HTTP DE SEGURIDAD (UTN-08)
 // =====================================
-const encabezadosSeguridad = helmet({
+const encabezadosHelmet = helmet({
   contentSecurityPolicy: {
     useDefaults: false,
     directives: {
@@ -14,7 +14,8 @@ const encabezadosSeguridad = helmet({
       // Solo scripts propios: sin scripts en línea ni eval (XSS)
       scriptSrc: ["'self'"],
       scriptSrcAttr: ["'none'"],
-      styleSrc: ["'self'", "'unsafe-inline'", CDN],
+      styleSrc: ["'self'", CDN],
+      styleSrcAttr: ["'none'"],
       fontSrc: ["'self'", CDN, 'data:'],
       imgSrc: ["'self'", 'data:'],
       connectSrc: ["'self'"],
@@ -36,6 +37,17 @@ const encabezadosSeguridad = helmet({
   noSniff: true,
   referrerPolicy: { policy: 'no-referrer' }
 });
+const encabezadosSeguridad = [
+  encabezadosHelmet,
+  (req, res, next) => {
+    res.setHeader(
+      'Permissions-Policy',
+      'camera=(), microphone=(), geolocation=()'
+    );
+
+    next();
+  }
+];
 
 // =====================================
 // EVITAR QUE SE GUARDEN RESPUESTAS DE LA API
