@@ -13,6 +13,7 @@ const bibliotecaRoutes = require('./src/routes/bibliotecaRoutes');
 const auditoriaRoutes = require('./src/routes/auditoriaRoutes');
 
 const auditar403 = require('./src/middleware/auditoria403');
+const { soloSuperAdmin } = require('./src/middleware/authMiddleware');
 
 const {
   encabezadosSeguridad,
@@ -50,6 +51,9 @@ app.use(auditar403);
 
 // PÁGINAS PROTEGIDAS Y ARCHIVOS ESTÁTICOS
 app.get(PAGINAS_PROTEGIDAS, protegerPaginas);
+app.get('/auditoria.html', sinCache, soloSuperAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'views', 'auditoria.html'));
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 // RUTAS DE LA API

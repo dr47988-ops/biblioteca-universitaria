@@ -285,6 +285,20 @@ describe('Cambios de rol y permisos', () => {
 
 // ---------------------------------------------------------------
 describe('Consulta de la auditoría (solo SuperAdmin)', () => {
+  test('solo el SuperAdmin recibe el HTML de la página de auditoría', async () => {
+    const agenteAdmin = await iniciarSesion(app, superAdmin);
+    const agenteAuditor = await iniciarSesion(app, auditor);
+    const agenteBibliotecario = await iniciarSesion(app, bibliotecario);
+
+    const pagina = await agenteAdmin.get('/auditoria.html').expect(200);
+    expect(pagina.headers['content-type']).toMatch(/text\/html/);
+    expect(pagina.headers['cache-control']).toBe('no-store');
+
+    for (const agente of [request(app), agenteAuditor, agenteBibliotecario]) {
+      await agente.get('/auditoria.html').expect(403);
+    }
+  });
+
   test('TC-36 el SuperAdmin consulta los registros, del más reciente al más antiguo', async () => {
     const agente = await iniciarSesion(app, superAdmin);
 

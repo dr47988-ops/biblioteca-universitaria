@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const datos = await respuesta.json();
 
-      if (!datos.usuario || datos.usuario.rol_id !== 1) {
+      if (!datos.usuario?.esSuperAdmin) {
         window.location.replace('/');
         return false;
       }
