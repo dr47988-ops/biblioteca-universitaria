@@ -75,6 +75,7 @@ Se configuran en el archivo .env (copiado de .env.example):
 | Rol | Correo | Contraseña |
 | --- | --- | --- |
 | SuperAdmin | `admin@biblioteca.local` | `AdminUTN2026!` |
+| Bibliotecario | `bibliotecario.test@example.com` | `Admin123` |
 
 El sistema no trae usuarios con contrasena. El primer SuperAdmin se crea con el script de abajo y despues puede registrar mas usuarios desde el panel. Las pruebas automatizadas no usan esas cuentas: crean sus propios usuarios temporales (correo terminado en @test.biblioteca.local) y los borran al terminar.
 
