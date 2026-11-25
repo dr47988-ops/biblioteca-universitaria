@@ -6,6 +6,7 @@ const fecha = new Intl.DateTimeFormat('es-CR', { dateStyle: 'medium', timeZone: 
 const colones = new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC' });
 let permisos = [];
 let libroEnEdicion;
+let solicitudCatalogo = 0;
 
 function estado(mensaje, error = false) {
   elemento('estado').textContent = mensaje;
@@ -92,8 +93,11 @@ function cerrarEdicion() {
 }
 
 async function cargarCatalogo() {
+  const solicitud = ++solicitudCatalogo;
   const q = datosFormulario(elemento('buscar')).q.trim();
   const libros = await biblioteca('/libros?' + new URLSearchParams({ q }));
+  if (solicitud !== solicitudCatalogo) return;
+
   tabla('libros', libros.map(libro => {
     const acciones = [];
     if (tiene('editar')) acciones.push(boton('Editar', () => editarLibro(libro)));
